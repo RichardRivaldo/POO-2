@@ -16,13 +16,8 @@ public class UniqueSkill extends Skill {
     }
 
     // Getters and Setters
-    public String getUniqueSpecies() {
-        return this.uniqueSpecies;
-    }
-
-    public void setUniqueSpecies(String species) {
-        this.uniqueSpecies = species;
-    }
+    public String getUniqueSpecies() {return this.uniqueSpecies;}
+    public void setUniqueSpecies(String species) {this.uniqueSpecies = species;}
 
     // Methods
     public Boolean isSkillLearnable(String engimonElmt, String species) {
@@ -34,9 +29,7 @@ public class UniqueSkill extends Skill {
         return String.format("%sUnique Species      : %s%n", skillInfo, this.uniqueSpecies);
     }
 
-    public void skillInfo() {
-        System.out.println(this);
-    }
+    public void skillInfo() {System.out.println(this);}
 
     public static void main(String[] args) {
         ArrayList<String> elements = UniqueSkill.randomElements();

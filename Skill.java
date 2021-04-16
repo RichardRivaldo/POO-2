@@ -22,38 +22,16 @@ public class Skill {
     }
 
     // Getters
-    public String getSkillName() {
-        return this.skillName;
-    }
-
-    public Integer getSkillPower() {
-        return this.basePower;
-    }
-
-    public Integer getSkillMastery() {
-        return this.masteryLevel;
-    }
-
-    public ArrayList<String> getCompatibleElmts() {
-        return this.compatibleElmts;
-    }
+    public String getSkillName() {return this.skillName;}
+    public Integer getSkillPower() {return this.basePower;}
+    public Integer getSkillMastery() {return this.masteryLevel;}
+    public ArrayList<String> getCompatibleElmts() {return this.compatibleElmts;}
 
     // Setters
-    public void setSkillName(String name) {
-        this.skillName = name;
-    }
-
-    public void setSkillPower(Integer basePower) {
-        this.basePower = basePower;
-    }
-
-    public void setSkillMastery(Integer mastery) {
-        this.masteryLevel = mastery;
-    }
-
-    public void setCompatibleElmts(ArrayList<String> elmts) {
-        this.compatibleElmts = elmts;
-    }
+    public void setSkillName(String name) {this.skillName = name;}
+    public void setSkillPower(Integer basePower) {this.basePower = basePower;}
+    public void setSkillMastery(Integer mastery) {this.masteryLevel = mastery;}
+    public void setCompatibleElmts(ArrayList<String> elmts) {this.compatibleElmts = elmts;}
 
     // Methods
     public Boolean isSkillLearnable(String engimonElmt) {
@@ -100,9 +78,7 @@ public class Skill {
                 this.skillName, this.basePower, this.masteryLevel, sb.toString());
     }
 
-    public void skillInfo() {
-        System.out.println(this);
-    }
+    public void skillInfo() {System.out.println(this);}
 
     public static void main(String[] args) {
         ArrayList<String> elements = Skill.randomElements();

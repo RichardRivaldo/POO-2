@@ -16,13 +16,8 @@ public class SpecialSkill extends Skill {
     }
 
     // Getters and Setters
-    public Integer getAdditionalPower() {
-        return this.additionalPower;
-    }
-
-    public void setAdditionalPower(Integer addPower) {
-        this.additionalPower = addPower;
-    }
+    public Integer getAdditionalPower() {return this.additionalPower;}
+    public void setAdditionalPower(Integer addPower) {this.additionalPower = addPower;}
 
     // Methods
     public void addAdditionalPower() {
@@ -58,9 +53,7 @@ public class SpecialSkill extends Skill {
         return String.format("%sAdditional Powers   : %d%n", skillInfo, this.getAdditionalPower());
     }
 
-    public void skillInfo() {
-        System.out.println(this);
-    }
+    public void skillInfo() {System.out.println(this);}
 
     public static void main(String[] args) {
         ArrayList<String> elements = SpecialSkill.randomElements();

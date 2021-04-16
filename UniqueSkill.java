@@ -31,7 +31,7 @@ public class UniqueSkill extends Skill {
 
     public String toString() {
         String skillInfo = super.toString();
-        return String.format("%s%nUnique Species      : %s%n", skillInfo, this.uniqueSpecies);
+        return String.format("%sUnique Species      : %s%n", skillInfo, this.uniqueSpecies);
     }
 
     public void skillInfo() {

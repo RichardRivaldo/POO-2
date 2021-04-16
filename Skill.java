@@ -96,7 +96,7 @@ public class Skill {
             sb.append("|");
         }
         return String.format(
-                "Skill Name          : %s%nBase Power          : %d%nMastery Level       : %d%nCompatible Elements : %s",
+                "Skill Name          : %s%nBase Power          : %d%nMastery Level       : %d%nCompatible Elements : %s%n",
                 this.skillName, this.basePower, this.masteryLevel, sb.toString());
     }
 

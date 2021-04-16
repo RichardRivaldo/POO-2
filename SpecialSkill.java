@@ -55,7 +55,7 @@ public class SpecialSkill extends Skill {
 
     public String toString() {
         String skillInfo = super.toString();
-        return String.format("%s%nAdditional Powers   : %d%n", skillInfo, this.getAdditionalPower());
+        return String.format("%sAdditional Powers   : %d%n", skillInfo, this.getAdditionalPower());
     }
 
     public void skillInfo() {

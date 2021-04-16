@@ -30,11 +30,31 @@ public class UniqueSkill extends Skill {
     }
 
     public String toString() {
-        String skillInfo = super.skillInfo();
-        return String.format("%s%nUnique Species : %s%n", skillInfo, this.uniqueSpecies);
+        String skillInfo = super.toString();
+        return String.format("%s%nUnique Species      : %s%n", skillInfo, this.uniqueSpecies);
     }
 
     public void skillInfo() {
         System.out.println(this);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String> elements = UniqueSkill.randomElements();
+
+        Skill defSkill = new UniqueSkill();
+        Skill mySkill = new UniqueSkill("My Skill", 2, 1, elements, "Firemon");
+
+        defSkill.skillInfo();
+        mySkill.skillInfo();
+
+        if (!defSkill.isSkillLearnable("FIRE")) {
+            System.out.println("FALSE");
+        }
+        if (mySkill.isSkillLearnable("WATER")) {
+            System.out.println("TRUE");
+        }
+
+        mySkill.masteryLevelUp(100);
+        mySkill.skillInfo();
     }
 }

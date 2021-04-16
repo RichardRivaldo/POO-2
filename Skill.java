@@ -60,9 +60,9 @@ public class Skill {
         return this.compatibleElmts.contains(engimonElmt);
     }
 
-    public void masteryLevelUp(Integer bpIncrease) {
-        if (this.masteryLevel + bpIncrease <= 3) {
-            this.masteryLevel += bpIncrease;
+    public void masteryLevelUp(Integer lvIncrease) {
+        if (this.masteryLevel + lvIncrease <= 3) {
+            this.masteryLevel += lvIncrease;
         } else {
             this.masteryLevel = 3;
         }
@@ -96,7 +96,7 @@ public class Skill {
             sb.append("|");
         }
         return String.format(
-                "Skill Name          : %s%nBase Power          : %d%nMastery Level       : %d%nCompatible Elements : %s%n",
+                "Skill Name          : %s%nBase Power          : %d%nMastery Level       : %d%nCompatible Elements : %s",
                 this.skillName, this.basePower, this.masteryLevel, sb.toString());
     }
 

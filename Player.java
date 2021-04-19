@@ -37,16 +37,17 @@ public class Player{
             i++;
         }
 
-        //inventorySkillItem << newSkillItem;
+        inventorySkillItem.add(newSkillItem);
 	    System.out.print("Berhasil menambahkan skill item baru");
 	    System.out.print("\n");
+    }
 
     public void addEngimon(Engimon newEngimon){
         if(inventoryEngimon.getInventorySize() + inventorySkillItem.getInventorySize() + 1 > MAX_CAPACITY){
             throw "Maximum Capacity";
             return;
         }
-        //inventoryEngimon << newEngimon;
+        inventoryEngimon.add(newEngimon);
 	    System.out.print("Berhasil menambahkan engimon baru");
 	    System.out.print("\n");
     }
@@ -64,7 +65,15 @@ public class Player{
     }
 
     public void replaceSkillItem(Integer replacedSkillIdx, Skill newSkill){
-
+        if (replacedSkillIdx - 1 > ActiveEngimon.getSkill().size() - 1){
+            System.out.print("Indeks Invalid! Pergantian Gagal");
+            System.out.print("\n");
+            return;
+        }
+        else{
+            ActiveEngimon.RemoveSkillByIdx(replacedSkillIdx);
+            ActiveEngimon.AddSkill(newSkill);
+        }
     }
 
     public void moveUp(){
@@ -84,7 +93,21 @@ public class Player{
     }
 
     public void showOwnedEngimon(){
-
+        Integer index = 1;
+        if (inventoryEngimon.getInventorySize() == 0){
+            System.out.print("Tidak ada engimon di inventory");
+            System.out.print("\n");
+        }
+        else {
+            System.out.print("Daftar Engimon yang dimiliki");
+            System.out.print("\n");
+            for (Engimon engimon : inventoryEngimon.getInventoryVector()){
+                System.out.print(engimon.getName());
+                System.out.print("\n");
+                System.out.print(".");
+                index++;
+            }
+        }
     }
 
     public void showStatsEngimon(){
@@ -92,7 +115,9 @@ public class Player{
     }
 
     public void showActiveEngimon(){
-
+        System.out.print("Engimon yang sedang aktif berpetualang : ");
+        System.out.print("\n");
+        ActiveEngimon.showStats();
     }
 
     public void swapActiveEngimon(String newEngimonName){
@@ -100,7 +125,28 @@ public class Player{
     }
 
     public void interactWithEngimon(){
+        System.out.print(ActiveEngimon.getName());
+        System.out.print(" : ");
+        System.out.print(ActiveEngimon.getMessage());
+        System.out.print("\n");
+    }
 
+    public void showOwnedItems(){
+        if (inventorySkillItem.getInventorySize() == 0)
+        {
+            System.out.print("Tidak ada Skill Items di Inventory!");
+            System.out.print("\n");
+        }
+        else
+        {
+            System.out.print("Daftar Skill Items yang dimiliki : ");
+            System.out.print("\n");
+    
+            for (SkillItem items : inventorySkillItem.getInventoryVector())
+            {
+                items.skillItemInfo();
+            }
+        }
     }
 
     public void doBreed(){

@@ -26,11 +26,45 @@ public class Breed implements Breeding {
             parents.add(thisEngimon.getName());
             parents.add(anotherEngimon.getName());
 
+            engimonAnak = tmp;
+
             engimonAnak.setParents(parents);
 
-            // for (int i = 0; i < thisEngimon.getSkill().size(); i++) {
+            for (int i = 0; i < thisEngimon.getSkill().size(); i++) {
+                Skill highest1 = engimon1tmp.getHighestMastery();
+                Skill highest2 = engimon2tmp.getHighestMastery();
 
-            // }
+                if (highest1.getSkillMastery() > highest2.getSkillMastery()) {
+                    if (containsSkill(engimon2tmp.getSkill(), highest1.getSkillName())) {
+                        engimonAnak.addSkill(highest1);
+                        engimon1tmp.removeSkill(highest1);
+                        engimon2tmp.removeSkill(highest2);
+                    } else {
+                        engimonAnak.addSkill(highest1);
+                        engimon2tmp.removeSkill(highest1);
+                    }
+                } else if (highest1.getSkillMastery() < highest2.getSkillMastery()) {
+                    if (containsSkill(engimon1tmp.getSkill(), highest2.getSkillName())) {
+                        engimonAnak.addSkill(highest2);
+                        engimon1tmp.removeSkill(highest1);
+                        engimon2tmp.removeSkill(highest2);
+                    } else {
+                        engimonAnak.addSkill(highest2);
+                        engimon2tmp.removeSkill(highest2);
+                    }
+                } else {
+                    if (highest1.getSkillName() == highest2.getSkillName()) {
+                        Skill tmpSkill = highest1;
+                        tmpSkill.masteryLevelUp(highest1.getSkillPower());
+                        engimonAnak.addSkill(tmpSkill);
+                        engimon1tmp.removeSkill(highest1);
+                        engimon2tmp.removeSkill(highest2);
+                    } else {
+                        engimonAnak.addSkill(highest1);
+                        engimon1tmp.removeSkill(highest2);
+                    }
+                }
+            }
         }
 
         return engimonAnak;

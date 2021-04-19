@@ -1,155 +1,124 @@
-import java.util.*;
+public class Player {
+    private Engimon activeEngimon;
+    private static Integer maxCapacity = 10;
+    private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
+    private Inventory<SkillItem> skillInvent  = new Inventory<SkillItem>();
 
-public class Player{
-    private Integer MAX_CAPACITY;
-    private Engimon ActiveEngimon;
-    private Map map;
-    private Inventory<Engimon> inventoryEngimon;
-    private Inventory<SkillItem> inventorySkillItem;
-
-    public Player() {
-        map.setplayerPosition(1,1);
-        map.setactiveEngimonPosition(0,0);
+    // Constructors
+    Player(){
+        this.activeEngimon = null;
     }
 
-    public Player(Engimon activeEngimon) {
-        addEngimon(activeEngimon);
-        map.setplayerPosition(1,1);
-        map.setactiveEngimonPosition(0,0);
+    // Copy Constructors
+    Player(Engimon active){
+        this.activeEngimon = active;
+        this.engimonInvent.add(this.activeEngimon);
     }
 
-    public void addSkillItem(SkillItem newSkillItem){
-        if(inventoryEngimon.getInventorySize() + inventorySkillItem.getInventorySize() + 1 > MAX_CAPACITY){
-            throw "Maximum Capacity";
-            return;
-        }
-
-        Integer i = 0;
-        while (i < inventorySkillItem.getInventorySize()){
-            if (inventorySkillItem.getInventoryVector()[i].getSkill().getSkillName().compare(newSkillItem.getSkill().getSkillName()) == 0)
-            {
-                System.out.print("Menambahkan Skill Item untuk ");
-                System.out.print(newSkillItem.getSkill().getSkillName());
-                System.out.print("\n");
-                inventorySkillItem.getInventoryVector()[i].addItemAmount(1);
-                return;
-            }
-            i++;
-        }
-
-        inventorySkillItem.add(newSkillItem);
-	    System.out.print("Berhasil menambahkan skill item baru");
-	    System.out.print("\n");
+    // Setter
+    public void setActiveEngimon(Engimon active){
+        this.activeEngimon = active;
     }
 
+    // Getters
+    public Inventory<Engimon> getEngimonInvent(){return this.engimonInvent;}
+    public Inventory<SkillItem> getSkillInvent(){return this.skillInvent;}
+    public int getTotalItems(){return this.skillInvent.size() + this.engimonInvent.size();}
+
+    // Methods
+
+    // Check if there is available space for inventory
+    public Boolean isStillEmpty(){return  this.getTotalItems() + 1 <= maxCapacity;}
+
+    // Add a new Engimon
     public void addEngimon(Engimon newEngimon){
-        if(inventoryEngimon.getInventorySize() + inventorySkillItem.getInventorySize() + 1 > MAX_CAPACITY){
-            throw "Maximum Capacity";
-            return;
-        }
-        inventoryEngimon.add(newEngimon);
-	    System.out.print("Berhasil menambahkan engimon baru");
-	    System.out.print("\n");
-    }
-
-    public Map getMap(){
-        return map;
-    }
-
-    public Inventory<Engimon> getInventoryEngimon() { return inventoryEngimon; }
-    public Inventory<SkillItem> getInventorySkillItem() { return inventorySkillItem; }
-    public Engimon getActiveEngimon() { return ActiveEngimon; }
-
-    public void learnSkill(String SkillName){
-
-    }
-
-    public void replaceSkillItem(Integer replacedSkillIdx, Skill newSkill){
-        if (replacedSkillIdx - 1 > ActiveEngimon.getSkill().size() - 1){
-            System.out.print("Indeks Invalid! Pergantian Gagal");
-            System.out.print("\n");
-            return;
+        if(!this.isStillEmpty()){
+            System.out.println("SHOULD WE THROW EXCEPTION HERE?");
         }
         else{
-            ActiveEngimon.RemoveSkillByIdx(replacedSkillIdx);
-            ActiveEngimon.AddSkill(newSkill);
+            this.engimonInvent.add(newEngimon);
+            System.out.println("Berhasil menambahkan Engimon baru!");
         }
     }
 
-    public void moveUp(){
-
-    }
-
-    public void moveDown(){
-
-    }
-
-    public void moveLeft(){
-
-    }
-
-    public void moveRight(){
-
-    }
-
-    public void showOwnedEngimon(){
-        Integer index = 1;
-        if (inventoryEngimon.getInventorySize() == 0){
-            System.out.print("Tidak ada engimon di inventory");
-            System.out.print("\n");
+    // Check if a Skill Item is already in Inventory
+    public int isAlreadyInInvent(String skillName){
+        for(SkillItem item: this.skillInvent.getItemList()){
+            if(item.getSkill().getSkillName().equals(skillName)){
+                return this.skillInvent.getItemList().indexOf(item);
+            }
         }
-        else {
-            System.out.print("Daftar Engimon yang dimiliki");
-            System.out.print("\n");
-            for (Engimon engimon : inventoryEngimon.getInventoryVector()){
-                System.out.print(engimon.getName());
-                System.out.print("\n");
-                System.out.print(".");
-                index++;
+        return -1;
+    }
+
+    // Add a new Skill Item
+    public void addSkillItem(SkillItem newSkillItem, Integer amount){
+        int inInvent = this.isAlreadyInInvent(newSkillItem.getSkill().getSkillName());
+
+        if(!this.isStillEmpty()){
+            System.out.println("SHOULD WE THROW EXCEPTION HERE?");
+        }
+        else{
+            if(inInvent != -1){
+                this.skillInvent.getItemList().get(inInvent).addAmount(amount);
+            }
+            else{
+                this.skillInvent.getItemList().add(newSkillItem);
+            }
+            System.out.println("Berhasil menambahkan Skill Item baru!");
+        }
+    }
+
+    // Show All Engimons Info
+    public void showAllOwnedEngi(){
+        if(this.engimonInvent.isEmptyInvent()){
+            System.out.println("Tidak ada Engimon di Inventory");
+        }
+        else{
+            System.out.println("Daftar Engimon yang dimiliki:");
+            for(Engimon engi: this.engimonInvent.getItemList()){
+                engi.showStats();
             }
         }
     }
 
-    public void showStatsEngimon(){
-
-    }
-
-    public void showActiveEngimon(){
-        System.out.print("Engimon yang sedang aktif berpetualang : ");
-        System.out.print("\n");
-        ActiveEngimon.showStats();
-    }
-
-    public void swapActiveEngimon(String newEngimonName){
-
-    }
-
-    public void interactWithEngimon(){
-        System.out.print(ActiveEngimon.getName());
-        System.out.print(" : ");
-        System.out.print(ActiveEngimon.getMessage());
-        System.out.print("\n");
-    }
-
-    public void showOwnedItems(){
-        if (inventorySkillItem.getInventorySize() == 0)
-        {
-            System.out.print("Tidak ada Skill Items di Inventory!");
-            System.out.print("\n");
+    // Show certain Engimons Info
+    public void showEngiInfo(String engiName){
+        for(Engimon engi: this.engimonInvent.getItemList()){
+            if(engi.getName().equals(engiName)){
+                engi.showStats();
+                return;
+            }
         }
-        else
-        {
-            System.out.print("Daftar Skill Items yang dimiliki : ");
-            System.out.print("\n");
-    
-            for (SkillItem items : inventorySkillItem.getInventoryVector())
-            {
-                items.skillItemInfo();
+        System.out.println("Tangkap Engimon ini untuk memenuhi rasa penasaranmu!");
+    }
+
+    // Show Active Engimons Info
+    public void showActiveEngi(){
+        System.out.println("Engimon yang sedang aktif berpetualang:");
+        this.activeEngimon.showStats();
+    }
+
+    // Interact with active engimon
+    public void interactWithEngi(){
+        System.out.println(this.activeEngimon.getName() + " said:");
+        System.out.println(this.activeEngimon.getMessage());
+    }
+
+    // Show all Skill Items
+    public void showAllOwnedItem(){
+        if(this.skillInvent.isEmptyInvent()){
+            System.out.println("Tidak ada SKill Item di Inventory");
+        }
+        else{
+            System.out.println("Daftar Skill Item yang dimiliki:");
+            for(SkillItem item: this.skillInvent.getItemList()){
+                item.skillItemInfo();
             }
         }
     }
 
-    public void doBreed(){
+    // Do breeding here
 
-    }
+    // Do Battle here
 }

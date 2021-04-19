@@ -106,6 +106,12 @@ public class Engimon extends AbstractEngimon {
     public void setParents(ArrayList<String> parents) {
         this.parents = parents;
     }
+    
+    public void showAllSkills(){
+        for(Skill skills: this.skill){
+            skills.skillInfo();
+        }
+    }
 
     public void showStats() {
         System.out.printf("Nama : %s\n", this.getName());
@@ -128,6 +134,8 @@ public class Engimon extends AbstractEngimon {
         System.out.printf("Level : %d\n", this.getLevel());
         System.out.printf("Experience : %d\n", this.getExperience());
         System.out.printf("Cumulative Experience : %d\n", this.getCumulativeExperience());
+        
+        showAllSkills();
     }
 
     public void addExp(int exp) {

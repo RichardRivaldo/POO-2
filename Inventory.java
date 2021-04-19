@@ -31,4 +31,14 @@ public class Inventory<T> {
     public int size() {
         return this.array_inventory.size();
     }
+
+    // Inventory Item List
+    public ArrayList<T> getItemList(){
+        return this.array_inventory;
+    }
+
+    // Check empty
+    public Boolean isEmptyInvent(){
+        return this.size() == 0;
+    }
 }

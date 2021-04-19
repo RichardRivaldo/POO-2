@@ -20,17 +20,22 @@ public class UniqueSkill extends Skill {
     public void setUniqueSpecies(String species) {this.uniqueSpecies = species;}
 
     // Methods
+
+    // Learnable or not
     public Boolean isSkillLearnable(String engimonElmt, String species) {
         return super.isSkillLearnable(engimonElmt) && species == this.uniqueSpecies;
     }
 
+    // String for Skill Info
     public String toString() {
         String skillInfo = super.toString();
         return String.format("%sUnique Species      : %s%n", skillInfo, this.uniqueSpecies);
     }
 
+    // Show skill info
     public void skillInfo() {System.out.println(this);}
 
+    // Testing
     public static void main(String[] args) {
         ArrayList<String> elements = UniqueSkill.randomElements();
 

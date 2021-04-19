@@ -34,10 +34,13 @@ public class Skill {
     public void setCompatibleElmts(ArrayList<String> elmts) {this.compatibleElmts = elmts;}
 
     // Methods
+
+    // Check if skill is learnable
     public Boolean isSkillLearnable(String engimonElmt) {
         return this.compatibleElmts.contains(engimonElmt);
     }
 
+    // Raise the mastery level
     public void masteryLevelUp(Integer lvIncrease) {
         if (this.masteryLevel + lvIncrease <= 3) {
             this.masteryLevel += lvIncrease;
@@ -46,6 +49,7 @@ public class Skill {
         }
     }
 
+    // Generate an array of random elements
     public static ArrayList<String> randomElements() {
         ArrayList<String> elementsList = new ArrayList<>(Arrays.asList("FIRE", "WATER", "EARTH", "WIND"));
         ArrayList<String> returned = new ArrayList<>();
@@ -62,11 +66,13 @@ public class Skill {
         return returned;
     }
 
+    // For prints
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (this.compatibleElmts.isEmpty()) {
             sb.append("-----");
-        } else {
+        } 
+        else {
             for (String elmts : this.compatibleElmts) {
                 sb.append("|");
                 sb.append(elmts);
@@ -78,8 +84,10 @@ public class Skill {
                 this.skillName, this.basePower, this.masteryLevel, sb.toString());
     }
 
+    // Show skill info
     public void skillInfo() {System.out.println(this);}
 
+    // Testing
     public static void main(String[] args) {
         ArrayList<String> elements = Skill.randomElements();
 

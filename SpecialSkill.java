@@ -20,6 +20,8 @@ public class SpecialSkill extends Skill {
     public void setAdditionalPower(Integer addPower) {this.additionalPower = addPower;}
 
     // Methods
+
+    // Randomly add additional powers
     public void addAdditionalPower() {
         Random rand = new Random();
         
@@ -34,6 +36,7 @@ public class SpecialSkill extends Skill {
         setAdditionalPower(this.getAdditionalPower() + addPower);
     }
 
+    // Raise the mastery level
     public void masteryLevelUp(Integer lvIncrease) {
         Integer currentLevel = this.getSkillMastery();
         if (this.getSkillMastery() + lvIncrease < 3) {
@@ -48,13 +51,16 @@ public class SpecialSkill extends Skill {
         }
     }
 
+    // String of skill info
     public String toString() {
         String skillInfo = super.toString();
         return String.format("%sAdditional Powers   : %d%n", skillInfo, this.getAdditionalPower());
     }
 
+    // Show the skill info
     public void skillInfo() {System.out.println(this);}
 
+    // Testing
     public static void main(String[] args) {
         ArrayList<String> elements = SpecialSkill.randomElements();
 

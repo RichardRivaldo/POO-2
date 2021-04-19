@@ -15,24 +15,32 @@ public class SkillItem {
     public Integer getAmount(){return this.item.getValue();}
 
     // Methods
+
+    // Add Skill item counts
     public void addAmount(Integer add){
         Integer currentAmount = this.getAmount();
         this.item = new Pair<>(this.getSkill(), currentAmount + add);
     }
 
+    // Decrease skill item amounts
     public void decAmount(Integer dec){
         Integer currentAmount = this.getAmount();
         this.item = new Pair<>(this.getSkill(), currentAmount - dec);
     }
 
+    // Get Skill Info as a string
     public String getSkillInfo(){return this.getSkill().toString();}
 
+    // String for Skill Item info
     public String toString(){
         String skillInfo = this.getSkillInfo();
         return String.format("%sItem Amount         : %d%n", skillInfo, this.getAmount());
     }
 
+    // Print the Skill Item info
     public void skillItemInfo(){System.out.println(this);}
+
+    // Testing
     public static void main(String[] args) {
         ArrayList<String> elements = Skill.randomElements();
 

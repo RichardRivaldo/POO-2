@@ -139,10 +139,46 @@ public class Engimon extends AbstractEngimon {
         }
     }
 
-    // GetHighestMastery
-    // AddSkill
-    // RemoveSkillByIdx
-    // RemoveSkill
-    // isSkillSizeValid
-    // containsSkill
+    public Skill getHighestMastery(){
+        int highest = -1;
+        Skill current = null;
+
+        for(Skill skills : this.skill){
+            if(skills.getSkillMastery() > highest){
+                highest = skills.getSkillMastery();
+                current = skills;
+            }
+        }
+        return current;
+    }
+
+    public int findSkill(String name){
+        for(Skill skills : this.skill){
+            if(skills.getSkillName().equals(name)){
+                return this.skill.indexOf(skills);
+            }
+        }
+        // Not Found
+        return -1;
+    }
+
+    public void addSkill(Skill newSkill){
+        this.skill.add(newSkill);
+    }
+
+    public void removeSkill(String skillName){
+        int idxOfRemoved = this.findSkill(skillName);
+
+        if(idxOfRemoved != -1){
+            this.skill.remove(idxOfRemoved);
+        }
+    }
+
+    public Boolean isSkillSizeValid(){
+        return this.skill.size() <= 4;
+    }
+
+    public Boolean containsSkill(String skillName){
+        return this.findSkill(skillName) != -1;
+    }
 }

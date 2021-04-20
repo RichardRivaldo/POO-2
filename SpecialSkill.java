@@ -54,7 +54,8 @@ public class SpecialSkill extends Skill {
     // String of skill info
     public String toString() {
         String skillInfo = super.toString();
-        return String.format("%sAdditional Powers   : %d%n", skillInfo, this.getAdditionalPower());
+        return String.format("%sSkill Grade         : Special Skill%nAdditional Powers   : %d%n", 
+        skillInfo, this.getAdditionalPower());
     }
 
     // Show the skill info
@@ -70,10 +71,10 @@ public class SpecialSkill extends Skill {
         defSkill.skillInfo();
         mySkill.skillInfo();
 
-        if (!defSkill.isSkillLearnable("FIRE")) {
+        if (!defSkill.isSkillLearnable(new ArrayList<String>(Arrays.asList("FIRE")))) {
             System.out.println("FALSE");
         }
-        if (mySkill.isSkillLearnable("WATER")) {
+        if (mySkill.isSkillLearnable(new ArrayList<String>(Arrays.asList("WATER")))) {
             System.out.println("TRUE");
         }
 

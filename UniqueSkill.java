@@ -22,14 +22,15 @@ public class UniqueSkill extends Skill {
     // Methods
 
     // Learnable or not
-    public Boolean isSkillLearnable(String engimonElmt, String species) {
-        return super.isSkillLearnable(engimonElmt) && species == this.uniqueSpecies;
+    public Boolean isSkillLearnable(ArrayList<String> engimonElmt, String species) {
+        return super.isSkillLearnable(engimonElmt) && species.equals(this.uniqueSpecies);
     }
 
     // String for Skill Info
     public String toString() {
         String skillInfo = super.toString();
-        return String.format("%sUnique Species      : %s%n", skillInfo, this.uniqueSpecies);
+        return String.format("%sSkill Grade         : Unique Skill%nUnique Species      : %s%n", 
+        skillInfo, this.uniqueSpecies);
     }
 
     // Show skill info
@@ -45,10 +46,10 @@ public class UniqueSkill extends Skill {
         defSkill.skillInfo();
         mySkill.skillInfo();
 
-        if (!defSkill.isSkillLearnable("FIRE")) {
+        if (!defSkill.isSkillLearnable(new ArrayList<String>(Arrays.asList("FIRE")))) {
             System.out.println("FALSE");
         }
-        if (mySkill.isSkillLearnable("WATER")) {
+        if (mySkill.isSkillLearnable(new ArrayList<String>(Arrays.asList("WATER")))) {
             System.out.println("TRUE");
         }
 

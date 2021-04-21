@@ -4,40 +4,53 @@ public class SkillItem {
     private Pair<Skill, Integer> item;
 
     // Default Constructor
-    public SkillItem(){item = new Pair<>(new Skill(), 0);}
-    
+    public SkillItem() {
+        item = new Pair<>(new Skill(), 0);
+    }
+
     // User-Defined Constructor
-    public SkillItem(Skill skill, Integer amount){item = new Pair<>(skill, amount);}
+    public SkillItem(Skill skill, Integer amount) {
+        item = new Pair<>(skill, amount);
+    }
 
     // Getters
-    public Skill getSkill(){return this.item.getKey();}
-    public Integer getAmount(){return this.item.getValue();}
+    public Skill getSkill() {
+        return this.item.getKey();
+    }
+
+    public Integer getAmount() {
+        return this.item.getValue();
+    }
 
     // Methods
 
     // Add Skill item counts
-    public void addAmount(Integer add){
+    public void addAmount(Integer add) {
         Integer currentAmount = this.getAmount();
         this.item = new Pair<>(this.getSkill(), currentAmount + add);
     }
 
     // Decrease skill item amounts
-    public void decAmount(Integer dec){
+    public void decAmount(Integer dec) {
         Integer currentAmount = this.getAmount();
         this.item = new Pair<>(this.getSkill(), currentAmount - dec);
     }
 
     // Get Skill Info as a string
-    public String getSkillInfo(){return this.getSkill().toString();}
+    public String getSkillInfo() {
+        return this.getSkill().toString();
+    }
 
     // String for Skill Item info
-    public String toString(){
+    public String toString() {
         String skillInfo = this.getSkillInfo();
         return String.format("%sItem Amount         : %d%n", skillInfo, this.getAmount());
     }
 
     // Print the Skill Item info
-    public void skillItemInfo(){System.out.println(this);}
+    public void skillItemInfo() {
+        System.out.println(this);
+    }
 
     // Testing
     public static void main(String[] args) {

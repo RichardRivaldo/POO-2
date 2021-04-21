@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class Skill {
-    private String skillName;
-    private Integer basePower;
-    private Integer masteryLevel;
-    private ArrayList<String> compatibleElmts = new ArrayList<String>();
+    protected String skillName;
+    protected Integer basePower;
+    protected Integer masteryLevel;
+    protected ArrayList<String> compatibleElmts = new ArrayList<String>();
 
     // Default constructor
     public Skill() {
@@ -36,8 +36,13 @@ public class Skill {
     // Methods
 
     // Check if skill is learnable
-    public Boolean isSkillLearnable(String engimonElmt) {
-        return this.compatibleElmts.contains(engimonElmt);
+    public Boolean isSkillLearnable(ArrayList<String> engimonElmt) {
+        for(String element: engimonElmt){
+            if(this.compatibleElmts.contains(element)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // Raise the mastery level
@@ -97,10 +102,10 @@ public class Skill {
         defSkill.skillInfo();
         mySkill.skillInfo();
 
-        if (!defSkill.isSkillLearnable("FIRE")) {
+        if (!defSkill.isSkillLearnable(new ArrayList<String>(Arrays.asList("FIRE")))) {
             System.out.println("FALSE");
         }
-        if (mySkill.isSkillLearnable("WATER")) {
+        if (mySkill.isSkillLearnable(new ArrayList<String>(Arrays.asList("WATER")))) {
             System.out.println("TRUE");
         }
 

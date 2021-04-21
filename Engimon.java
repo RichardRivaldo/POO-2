@@ -57,8 +57,8 @@ public class Engimon extends AbstractEngimon {
         this.experience = 1;
         this.cumulativeExperience = 0;
         this.message = "I'm an Engimon";
-        this.parents = new ArrayList<String>(Arrays.asList(new String[2]));
-        this.skill = new ArrayList<Skill>(Arrays.asList(new Skill[4]));
+        this.parents = new ArrayList<String>();
+        this.skill = new ArrayList<Skill>();
     }
 
     // Getters
@@ -108,8 +108,13 @@ public class Engimon extends AbstractEngimon {
     }
     
     public void showAllSkills(){
-        for(Skill skills: this.skill){
-            skills.skillInfo();
+        if(!this.skill.isEmpty()){
+            for(Skill skills: this.skill){
+                skills.skillInfo();
+            }
+        }
+        else{
+            System.out.println("Engimon ini belum memiliki Skill!\n");
         }
     }
 
@@ -117,24 +122,29 @@ public class Engimon extends AbstractEngimon {
         System.out.printf("Nama : %s\n", this.getName());
         System.out.printf("Spesies : %s\n", this.getSpecies());
         System.out.print("Parents : ");
-        if (this.parents.get(0) != "") {
-            System.out.print(this.parents.get(0));
-            System.out.print(", ");
-            System.out.println(this.parents.get(1));
-        } else {
+
+        // NPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        // if (this.parents.get(0) != "") {
+        //     System.out.print(this.parents.get(0));
+        //     System.out.print(", ");
+        //     System.out.println(this.parents.get(1));
+        // } 
+        if(true) {
             System.out.println("None");
         }
         // Show Skills
         System.out.print("Element : ");
-        if (this.element.get(0) != this.element.get(1)) {
-            System.out.printf("%s / %s\n", this.element.get(0), this.element.get(1));
-        } else {
+        // NPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        // if (this.element.get(0) != this.element.get(1)) {
+        //     System.out.printf("%s / %s\n", this.element.get(0), this.element.get(1));
+        // } 
+        if(true) {
             System.out.println(this.element.get(0));
         }
         System.out.printf("Level : %d\n", this.getLevel());
         System.out.printf("Experience : %d\n", this.getExperience());
         System.out.printf("Cumulative Experience : %d\n", this.getCumulativeExperience());
-        
+        System.out.println("Daftar Skill yang dimiliki :");
         showAllSkills();
     }
 
@@ -150,28 +160,54 @@ public class Engimon extends AbstractEngimon {
     public Skill getHighestMastery(){
         int highest = -1;
         Skill current = null;
-
-        for(Skill skills : this.skill){
-            if(skills.getSkillMastery() > highest){
-                highest = skills.getSkillMastery();
-                current = skills;
+        
+        if(!this.skill.isEmpty()){
+            for(Skill skills : this.skill){
+                if(skills.getSkillMastery() > highest){
+                    highest = skills.getSkillMastery();
+                    current = skills;
+                }
             }
         }
         return current;
     }
 
     public int findSkill(String name){
-        for(Skill skills : this.skill){
-            if(skills.getSkillName().equals(name)){
-                return this.skill.indexOf(skills);
+        if(!this.skill.isEmpty()){
+            for(Skill skills : this.skill){
+                if(skills.getSkillName().equals(name)){
+                    return this.skill.indexOf(skills);
+                }
             }
         }
         // Not Found
         return -1;
     }
 
+    public Boolean isSkillFull(){
+        return this.skill.size() == 4;
+    }
+
     public void addSkill(Skill newSkill){
-        this.skill.add(newSkill);
+        if(this.hasSkill(newSkill.getSkillName())){
+            System.out.println("Engimon ini sudah memiliki Skill ini!");
+        }
+        else if(this.isSkillFull()){
+            System.out.println("Skill Engimon ini sudah penuh!");
+            this.replaceSkill();
+            this.skill.add(newSkill);
+            System.out.println("Berhasil mempelajari Skill baru!");
+        }
+        else{
+            this.skill.add(newSkill);
+            System.out.println("Berhasil mempelajari Skill baru!");
+        }
+    }
+
+    public void replaceSkill(){
+        // Minta input mau ganti skill atau ga
+        // Kalo mau, pilih skill yang mau diinput
+        // Terus remove aja
     }
 
     public void removeSkill(String skillName){
@@ -186,7 +222,7 @@ public class Engimon extends AbstractEngimon {
         return this.skill.size() <= 4;
     }
 
-    public Boolean containsSkill(String skillName){
+    public Boolean hasSkill(String skillName){
         return this.findSkill(skillName) != -1;
     }
 }

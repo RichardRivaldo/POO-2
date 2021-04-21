@@ -1,4 +1,19 @@
-import java.util.ArrayList;
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+public class SortSkill implements Comparator<SkillItem> {
+    public int compare(SkillItem skillItem1, SkillItem skillItem2) {
+        return skillItem2.getSkill().getSkillPower() - skillItem1.getSkill().getSkillPower();
+    }
+}
+
+public class SortEngimon implements Comparator<Engimon> {
+    public int compare(Engimon engi1, Engimon engi2) {
+        return engi2.getLevel() - engi1.getLevel();
+    }
+}
+
 
 public class Player {
     private Engimon activeEngimon;
@@ -186,6 +201,30 @@ public class Player {
             }
         }
     }
+
+    public HashMap<String, Inventory<Engimon>> groupEngimon() {
+        HashMap<String, Inventory<Engimon>> groupEngimon = new HashMap<String, Inventory<Engimon>>();
+        for(Engimon engi : this.engimonInvent.getItemList()) {
+            if(engi.getElement().size() == 1) {
+                if(groupEngimon.get(engi.getElement().get(0)) != null) {
+                    groupEngimon.get(engi.getElement().get(0)).add(engi);
+                }else{
+                    Inventory<Engimon> inventEngi = new Inventory<Engimon>();
+                    inventEngi.add(engi);
+                    groupEngimon.put(engi.getElement().get(0), inventEngi);
+                }
+            }else {
+                if(groupEngimon.get("More") != null) {
+                    groupEngimon.get("More").add(engi);
+                }else{
+                    Inventory<Engimon> inventEngi = new Inventory<Engimon>();
+                    inventEngi.add(engi);
+                    groupEngimon.put("More", inventEngi);
+                }
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         Engimon active = new Engimon("Engi", "Firemon", Skill.randomElements());

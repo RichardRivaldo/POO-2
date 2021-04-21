@@ -36,6 +36,7 @@ public class Engimon extends AbstractEngimon {
     private int cumulativeExperience;
     private ArrayList<String> parents;
     private String message;
+    private int life;
 
     public Engimon() {
         this.name = null;
@@ -47,6 +48,7 @@ public class Engimon extends AbstractEngimon {
         this.cumulativeExperience = -1;
         this.parents = null;
         this.message = null;
+        this.life = 0;
     }
 
     public Engimon(String nama, String species, ArrayList<String> element) {
@@ -59,6 +61,7 @@ public class Engimon extends AbstractEngimon {
         this.message = "I'm an Engimon";
         this.parents = new ArrayList<String>();
         this.skill = new ArrayList<Skill>();
+        this.life = 3;
     }
 
     // Getters
@@ -115,6 +118,14 @@ public class Engimon extends AbstractEngimon {
         } else {
             System.out.println("Engimon ini belum memiliki Skill!\n");
         }
+    }
+
+    public void decreaseLife() {
+        this.life -= 1;
+    }
+
+    public void addLife() {
+        this.life += 1;
     }
 
     public void showStats() {
@@ -194,7 +205,7 @@ public class Engimon extends AbstractEngimon {
                 System.out.print("Masukkan nama skill yang ingin diganti : ");
                 String skillName = scanner.nextLine();
                 this.removeSkill(skillName);
-                if(!this.isSkillFull()){
+                if (!this.isSkillFull()) {
                     this.skill.add(newSkill);
                     System.out.println("Berhasil mempelajari Skill baru!");
                 }
@@ -211,8 +222,8 @@ public class Engimon extends AbstractEngimon {
         if (idxOfRemoved != -1) {
             this.skill.remove(idxOfRemoved);
         }
-        else{
-            System.out.println("Engimon ini tidak memiliki Skill tersebut!");
+        else {
+            System.out.println("Engimon ini tidak memiliki skill tersebut");
         }
     }
 

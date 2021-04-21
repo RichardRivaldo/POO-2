@@ -11,7 +11,7 @@ public class Breed implements Breeding {
         Engimon engimonAnak = new Engimon();
         if (thisEngimon.getElement() != anotherEngimon.getElement()) {
             return engimonAnak;
-        } else if (thisEngimon.getLevel() < 1 || anotherEngimon.getLevel() < 1) {
+        } else if (thisEngimon.getLevel() < 3 || anotherEngimon.getLevel() < 3) {
             return engimonAnak;
         } else {
             Engimon engimon1tmp = thisEngimon;
@@ -21,6 +21,9 @@ public class Breed implements Breeding {
             String nama = scanner.nextLine();
 
             Engimon tmp = new Engimon(nama, thisEngimon.getSpecies(), thisEngimon.getElement());
+
+            thisEngimon.setLevel(thisEngimon.getLevel() - 3);
+            anotherEngimon.setLevel(anotherEngimon.getLevel() - 3);
 
             ArrayList<String> parents = new ArrayList<String>();
             parents.add(thisEngimon.getName());
@@ -55,7 +58,9 @@ public class Breed implements Breeding {
                 } else {
                     if (highest1.getSkillName() == highest2.getSkillName()) {
                         Skill tmpSkill = highest1;
-                        tmpSkill.masteryLevelUp(highest1.getSkillPower());
+                        if (tmpSkill.getSkillMastery() < 3) {
+                            tmpSkill.masteryLevelUp(highest1.getSkillPower());
+                        }
                         engimonAnak.addSkill(tmpSkill);
                         engimon1tmp.removeSkill(highest1);
                         engimon2tmp.removeSkill(highest2);

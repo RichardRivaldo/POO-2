@@ -2,13 +2,13 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 
-public class SortSkill implements Comparator<SkillItem> {
+class SortSkill implements Comparator<SkillItem> {
     public int compare(SkillItem skillItem1, SkillItem skillItem2) {
         return skillItem2.getSkill().getSkillPower() - skillItem1.getSkill().getSkillPower();
     }
 }
 
-public class SortEngimon implements Comparator<Engimon> {
+class SortEngimon implements Comparator<Engimon> {
     public int compare(Engimon engi1, Engimon engi2) {
         return engi2.getLevel() - engi1.getLevel();
     }
@@ -199,6 +199,7 @@ public class Player {
 
     public HashMap<String, Inventory<Engimon>> groupEngimon() {
         HashMap<String, Inventory<Engimon>> groupEngimon = new HashMap<String, Inventory<Engimon>>();
+
         for(Engimon engi : this.engimonInvent.getItemList()) {
             if(engi.getElement().size() == 1) {
                 if(groupEngimon.get(engi.getElement().get(0)) != null) {
@@ -218,6 +219,12 @@ public class Player {
                 }
             }
         }
+
+        for (Inventory<Engimon> inventEngi : groupEngimon.values()) {
+            Collections.sort(inventEngi.getItemList(), new SortEngimon());
+        }
+
+        return groupEngimon;
     }
 
     // Testing

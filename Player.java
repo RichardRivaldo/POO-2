@@ -45,7 +45,7 @@ public class Player {
     // Add a new Engimon
     public void addEngimon(Engimon newEngimon) {
         if (!this.isStillEmpty()) {
-            System.out.println("SHOULD WE THROW EXCEPTION HERE?");
+            System.out.println("Inventory sudah penuh!");
         } else {
             this.engimonInvent.add(newEngimon);
             System.out.println("Berhasil menambahkan Engimon baru!");
@@ -67,7 +67,7 @@ public class Player {
         int inInvent = this.isAlreadyInInvent(newSkillItem.getSkill().getSkillName());
 
         if (!this.isStillEmpty()) {
-            System.out.println("SHOULD WE THROW EXCEPTION HERE?");
+            System.out.println("Inventory sudah penuh!");
         } else {
             if (inInvent != -1) {
                 this.skillInvent.getItemList().get(inInvent).addAmount(newSkillItem.getAmount());
@@ -136,39 +136,52 @@ public class Player {
     }
 
     // Decrement
-    public void decOrRemove(int index) {
+    public void decOrRemove(int index) throws IndexOutOfBoundException{
         if (this.skillInvent.getItemList().get(index).getAmount() > 1)
-            this.skillInvent.getItemList.get(index).decAmount(1);
+            this.skillInvent.getItemList().get(index).decAmount(1);
         else
             this.skillInvent.remove(index);
-
     }
 
     // Learn a skill item to active engimon
     public void learnNewSkill(String skillName, String engiName) {
         int hasItem = isAlreadyInInvent(skillName);
         int hasEngi = isAlreadyOwned(engiName);
+        Boolean wantToAdd = false;
         if (hasItem == -1) {
             System.out.println("Tidak ada Skill Item target di Inventory!");
-        } else if (hasEngi == -1) {
+        } 
+        else if (hasEngi == -1) {
             System.out.println("Tidak ada Engimon target di Inventory!");
-        } else {
+        } 
+        else {
             ArrayList<String> elements = this.engimonInvent.getItemList().get(hasEngi).getElement();
-
             if (this.skillInvent.getItemList().get(hasItem).getSkill() instanceof UniqueSkill) {
                 UniqueSkill newSkill = (UniqueSkill) this.skillInvent.getItemList().get(hasItem).getSkill();
                 if (newSkill.isSkillLearnable(elements, this.engimonInvent.getItemList().get(hasEngi).getSpecies())) {
                     this.engimonInvent.getItemList().get(hasEngi).addSkill(newSkill);
-                } else {
+                    wantToAdd = true;
+                } 
+                else {
                     System.out.println("Engimon ini tidak cocok dengan spesies Skill tersebut!");
                 }
-            } else {
+            } 
+            else {
                 Skill newSkill = this.skillInvent.getItemList().get(hasItem).getSkill();
                 if (newSkill.isSkillLearnable(elements)) {
                     this.engimonInvent.getItemList().get(hasEngi).addSkill(newSkill);
-                    this.decOrRemove(hasItem);
-                } else {
+                    wantToAdd = true;
+                } 
+                else {
                     System.out.println("Engimon ini tidak cocok dengan elemen Skill tersebut!");
+                }
+            }
+            if(wantToAdd){
+                try{
+                    this.decOrRemove(hasItem);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -208,6 +221,7 @@ public class Player {
         test.learnNewSkill("BASIC", "Engi2");
 
         test.showAllOwnedEngi();
+        test.showAllOwnedItem();
     }
 
     // Do breeding here

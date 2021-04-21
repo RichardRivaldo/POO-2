@@ -1,15 +1,20 @@
 // Pair class
 class Pair<U, V>
 {
-    public final U first;       // the first field of a pair
-    public final V second;      // the second field of a pair
+    public U first;       // the first field of a pair
+    public V second;      // the second field of a pair
  
     // Constructs a new pair with specified values
-    private Pair(U first, V second)
+    public Pair(U first, V second)
     {
         this.first = first;
         this.second = second;
     }
+
+    public U getKey(){return this.first;}
+    public V getValue(){return this.second;}
+    public void setKey(U first){this.first = first;}
+    public void setValue(V second){this.second = second;}
  
     @Override
     // Checks specified object is "equal to" the current object or not
@@ -48,7 +53,7 @@ class Pair<U, V>
     // Factory method for creating a typed Pair immutable instance
     public static <U, V> Pair <U, V> of(U a, V b)
     {
-        // calls private constructor
+        // calls public constructor
         return new Pair<>(a, b);
     }
 }

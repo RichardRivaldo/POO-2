@@ -127,13 +127,13 @@ public class Engimon extends AbstractEngimon {
         }
 
         // Show Skills
-        System.out.print("Element : ");
+        System.out.print("\nElement : ");
 
         for (String element : this.getElement()) {
             System.out.printf("%s  ", element);
         }
 
-        System.out.printf("Level : %d\n", this.getLevel());
+        System.out.printf("\nLevel : %d\n", this.getLevel());
         System.out.printf("Experience : %d\n", this.getExperience());
         System.out.printf("Cumulative Experience : %d\n", this.getCumulativeExperience());
         System.out.println("Daftar Skill yang dimiliki :");
@@ -185,31 +185,24 @@ public class Engimon extends AbstractEngimon {
             System.out.println("Engimon ini sudah memiliki Skill ini!");
         } else if (this.isSkillFull()) {
             System.out.println("Skill Engimon ini sudah penuh!");
-            this.replaceSkill();
-            this.skill.add(newSkill);
-            System.out.println("Berhasil mempelajari Skill baru!");
+            Scanner scanner = new Scanner(System.in);
+            String choice;
+            System.out.print("Ingin ganti skill? (y/n) : ");
+            choice = scanner.nextLine();
+
+            if (choice.equals("y")) {
+                System.out.print("Masukkan nama skill yang ingin diganti : ");
+                String skillName = scanner.nextLine();
+                this.removeSkill(skillName);
+                if(!this.isSkillFull()){
+                    this.skill.add(newSkill);
+                    System.out.println("Berhasil mempelajari Skill baru!");
+                }
+            }
         } else {
             this.skill.add(newSkill);
             System.out.println("Berhasil mempelajari Skill baru!");
         }
-    }
-
-    public void replaceSkill() {
-        Scanner scanner = new Scanner(System.in);
-
-        String choice;
-        System.out.print("Ingin ganti skill? (y/n) : ");
-        choice = scanner.nextLine();
-
-        if (choice == "y") {
-            System.out.print("Masukkan nama skill : ");
-            String skillName = scanner.nextLine();
-            this.removeSkill(skillName);
-        }
-
-        // Minta input mau ganti skill atau ga
-        // Kalo mau, pilih skill yang mau diinput
-        // Terus remove aja
     }
 
     public void removeSkill(String skillName) {
@@ -217,6 +210,9 @@ public class Engimon extends AbstractEngimon {
 
         if (idxOfRemoved != -1) {
             this.skill.remove(idxOfRemoved);
+        }
+        else{
+            System.out.println("Engimon ini tidak memiliki Skill tersebut!");
         }
     }
 

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Player {
     private Engimon activeEngimon;
-    private static Integer maxCapacity = 5;
+    private static Integer maxCapacity = 10;
     private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
     private Inventory<SkillItem> skillInvent = new Inventory<SkillItem>();
 
@@ -145,48 +145,44 @@ public class Player {
 
     // Learn a skill item to active engimon
     public void learnNewSkill(String skillName, String engiName) {
-        int hasItem = isAlreadyInInvent(skillName);
-        int hasEngi = isAlreadyOwned(engiName);
+        int hasItem = isAlreadyInInvent(skillName), hasEngi = isAlreadyOwned(engiName);
         Boolean wantToAdd = false;
         if (hasItem == -1) {
             System.out.println("Tidak ada Skill Item target di Inventory!");
-        } 
-        else if (hasEngi == -1) {
+        } else if (hasEngi == -1) {
             System.out.println("Tidak ada Engimon target di Inventory!");
-        } 
-        else {
+        } else if(this.engimonInvent.getItemList().get(hasEngi).hasSkill(skillName)){
+            System.out.println("Engimon ini sudah memiliki Skill tersebut!");
+        } else {
             ArrayList<String> elements = this.engimonInvent.getItemList().get(hasEngi).getElement();
             if (this.skillInvent.getItemList().get(hasItem).getSkill() instanceof UniqueSkill) {
                 UniqueSkill newSkill = (UniqueSkill) this.skillInvent.getItemList().get(hasItem).getSkill();
                 if (newSkill.isSkillLearnable(elements, this.engimonInvent.getItemList().get(hasEngi).getSpecies())) {
                     this.engimonInvent.getItemList().get(hasEngi).addSkill(newSkill);
                     wantToAdd = true;
-                } 
-                else {
+                } else {
                     System.out.println("Engimon ini tidak cocok dengan spesies Skill tersebut!");
                 }
-            } 
-            else {
+            } else {
                 Skill newSkill = this.skillInvent.getItemList().get(hasItem).getSkill();
                 if (newSkill.isSkillLearnable(elements)) {
                     this.engimonInvent.getItemList().get(hasEngi).addSkill(newSkill);
                     wantToAdd = true;
-                } 
-                else {
+                } else {
                     System.out.println("Engimon ini tidak cocok dengan elemen Skill tersebut!");
                 }
             }
             if(wantToAdd){
                 try{
                     this.decOrRemove(hasItem);
-                }
-                catch(Exception e){
+                } catch(Exception e){
                     System.out.println(e.getMessage());
                 }
             }
         }
     }
 
+    // Testing
     public static void main(String[] args) {
         Engimon active = new Engimon("Engi", "Firemon", Skill.randomElements());
         Player test = new Player(active);
@@ -200,16 +196,26 @@ public class Player {
         test.showEngiInfo("Engi");
         test.showEngiInfo("Engia");
 
+        // Max 2 elements, for testing only
         UniqueSkill unique = new UniqueSkill("UNIQUE", 1, 1, Skill.randomElements(), "Icemon");
         SpecialSkill special = new SpecialSkill("SPECIAL", 2, 2, Skill.randomElements(), 10);
         Skill skill = new Skill("BASIC", 1, 1, Skill.randomElements());
+        Skill another = new Skill("BASIC2", 1, 2, Skill.randomElements());
+        Skill another2 = new Skill("BASIC3", 1, 2, Skill.randomElements());
+        Skill another3 = new Skill("BASIC4", 1, 2, Skill.randomElements());
 
         SkillItem item = new SkillItem(skill, 2);
-        SkillItem uniqueItem = new SkillItem(unique, 1);
+        SkillItem anotherItem = new SkillItem(another, 1);
+        SkillItem anotherItem2 = new SkillItem(another2, 1);
+        SkillItem anotherItem3 = new SkillItem(another3, 1);
+        SkillItem uniqueItem = new SkillItem(unique, 4);
         SkillItem specialItem = new SkillItem(special, 3);
-        Engimon newEngi = new Engimon("Engi2", "Firemon", Skill.randomElements());
+        Engimon newEngi = new Engimon("Engi2", "Icemon", Skill.randomElements());
 
         test.addSkillItem(item);
+        test.addSkillItem(anotherItem);
+        test.addSkillItem(anotherItem2);
+        test.addSkillItem(anotherItem3);
         test.addSkillItem(uniqueItem);
         test.addSkillItem(specialItem);
         test.showAllOwnedItem();
@@ -219,9 +225,16 @@ public class Player {
 
         test.learnNewSkill("UNIQUE", "Engi");
         test.learnNewSkill("BASIC", "Engi2");
+        test.learnNewSkill("UNIQUE", "Engi2");
+        test.learnNewSkill("SPECIAL", "Engi2");
+        test.learnNewSkill("BASIC2", "Engi2");
+        test.learnNewSkill("BASIC3", "Engi2");
 
         test.showAllOwnedEngi();
         test.showAllOwnedItem();
+
+        test.learnNewSkill("BASIC4", "Engi2");
+        test.showEngiInfo("Engi2");
     }
 
     // Do breeding here

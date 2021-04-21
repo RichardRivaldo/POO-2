@@ -8,5 +8,4 @@ public class IndexOutOfBoundException extends Exception {
     public String getErrorMessage() {
         return this.errorMessage;
     }
-
 }

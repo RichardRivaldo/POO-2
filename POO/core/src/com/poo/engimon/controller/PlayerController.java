@@ -2,7 +2,7 @@ package com.poo.engimon.controller;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.poo.engimon.model.Player;
+import com.poo.engimon.entities.Player;
 
 public class PlayerController extends InputAdapter {
     private Player player;

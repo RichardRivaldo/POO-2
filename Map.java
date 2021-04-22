@@ -74,7 +74,7 @@ public class Map {
         }
     }
 
-    private enum EngimonLiarSpesies
+    public enum EngimonLiarSpesies
     {
         Firemon,
         Watermon,
@@ -132,8 +132,8 @@ public class Map {
         Random rand = new Random();
         if (engimonLiar.size() < maxEngimonLiar)
         {
-            int coorX;
-            int coorY;
+            int coorX = 0;
+            int coorY = 0;
             boolean foundx = false;
             boolean foundy = false;
             while (!foundx)
@@ -364,7 +364,7 @@ public class Map {
 
     public void removeEngimonLiar(Engimon engimon)
     {
-        int index;
+        int index = 0;
         int xnya;
         int ynya;
         for (int i = 0; i < engimonLiar.size(); i++)

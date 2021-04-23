@@ -12,12 +12,12 @@ class SortEngimon implements Comparator<Engimon> {
     }
 }
 
-
 public class Player {
     private Engimon activeEngimon;
     private static Integer maxCapacity = 10;
     private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
     private Inventory<SkillItem> skillInvent = new Inventory<SkillItem>();
+    private String playerName;
 
     // Constructors
     Player() {
@@ -28,6 +28,29 @@ public class Player {
     Player(Engimon active) {
         this.activeEngimon = active;
         this.engimonInvent.add(this.activeEngimon);
+        this.playerName = "Ash";
+    }
+
+    public void changePlayerName(String newName) {
+        this.playerName = newName;
+    }
+
+    public void showHelp() {
+        System.out.println("w : Move Up");
+        System.out.println("a : Move Left");
+        System.out.println("s : Move Down");
+        System.out.println("d : Move Right");
+        System.out.println("help : Show Help Menu");
+        System.out.println("items : Show Skill Items");
+        System.out.println("engimons : Show Engimons");
+        System.out.println("breed : Breed Two Engimons");
+        System.out.println("show : Show Active Engimons");
+        System.out.println("stats : Show Engimons Stats");
+        System.out.println("engi : Interact With Engimon");
+        System.out.println("swap : Swap Active Engimons");
+        System.out.println("learn : Learn New Skills");
+        System.out.println("battle : Challenge Engimons!");
+        System.out.println("quit : Exit The Game");
     }
 
     // Setter
@@ -149,7 +172,7 @@ public class Player {
     }
 
     // Decrement
-    public void decOrRemove(int index) throws IndexOutOfBoundException{
+    public void decOrRemove(int index) throws IndexOutOfBoundException {
         if (this.skillInvent.getItemList().get(index).getAmount() > 1)
             this.skillInvent.getItemList().get(index).decAmount(1);
         else
@@ -164,7 +187,7 @@ public class Player {
             System.out.println("Tidak ada Skill Item target di Inventory!");
         } else if (hasEngi == -1) {
             System.out.println("Tidak ada Engimon target di Inventory!");
-        } else if(this.engimonInvent.getItemList().get(hasEngi).hasSkill(skillName)){
+        } else if (this.engimonInvent.getItemList().get(hasEngi).hasSkill(skillName)) {
             System.out.println("Engimon ini sudah memiliki Skill tersebut!");
         } else {
             ArrayList<String> elements = this.engimonInvent.getItemList().get(hasEngi).getElement();
@@ -185,10 +208,10 @@ public class Player {
                     System.out.println("Engimon ini tidak cocok dengan elemen Skill tersebut!");
                 }
             }
-            if(wantToAdd){
-                try{
+            if (wantToAdd) {
+                try {
                     this.decOrRemove(hasItem);
-                } catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -198,19 +221,19 @@ public class Player {
     public HashMap<String, Inventory<Engimon>> groupEngimon() {
         HashMap<String, Inventory<Engimon>> groupEngimon = new HashMap<String, Inventory<Engimon>>();
 
-        for(Engimon engi : this.engimonInvent.getItemList()) {
-            if(engi.getElement().size() == 1) {
-                if(groupEngimon.get(engi.getElement().get(0)) != null) {
+        for (Engimon engi : this.engimonInvent.getItemList()) {
+            if (engi.getElement().size() == 1) {
+                if (groupEngimon.get(engi.getElement().get(0)) != null) {
                     groupEngimon.get(engi.getElement().get(0)).add(engi);
-                }else{
+                } else {
                     Inventory<Engimon> inventEngi = new Inventory<Engimon>();
                     inventEngi.add(engi);
                     groupEngimon.put(engi.getElement().get(0), inventEngi);
                 }
-            }else {
-                if(groupEngimon.get("More") != null) {
+            } else {
+                if (groupEngimon.get("More") != null) {
                     groupEngimon.get("More").add(engi);
-                }else{
+                } else {
                     Inventory<Engimon> inventEngi = new Inventory<Engimon>();
                     inventEngi.add(engi);
                     groupEngimon.put("More", inventEngi);

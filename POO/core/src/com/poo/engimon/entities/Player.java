@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Player extends Sprite implements InputProcessor {
     // Gravity and speed of the entity
@@ -21,7 +22,8 @@ public class Player extends Sprite implements InputProcessor {
     private String orientation = "s";
     // Animation Time
     private float animationTime = 0;
-
+    //Dialog box
+    private Stage stage;
     // Constructor
     public Player(Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
                   TiledMapTileLayer collisionsLayer, int x, int y){

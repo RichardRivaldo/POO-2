@@ -2,10 +2,9 @@ package com.poo.engimon.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
@@ -16,10 +15,26 @@ public class Player extends Sprite implements InputProcessor {
     private Vector2 velocity = new Vector2();
     // Layer of blocks with collisions
     private TiledMapTileLayer collisionLayer;
+    // Player Atlas Animation
+    private Animation<TextureRegion> s, a, w, d;
+    // Player Orientation
+    private String orientation = "s";
+    // Animation Time
+    private float animationTime = 0;
 
     // Constructor
-    public Player(Sprite sprite, TiledMapTileLayer collisionsLayer, int x, int y){
-        super(sprite);
+    public Player(Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
+                  TiledMapTileLayer collisionsLayer, int x, int y){
+        // Make the sprite
+        super(s.getKeyFrame(0));
+
+        // Animations
+        this.s = s;
+        this.a = a;
+        this.w = w;
+        this.d = d;
+
+        // Collision Layers and Init Position
         this.collisionLayer = collisionsLayer;
         this.setPosition(x * this.getCollisionLayer().getTileWidth(),
                 (this.getCollisionLayer().getHeight() - y) * this.getCollisionLayer().getTileHeight());
@@ -34,6 +49,8 @@ public class Player extends Sprite implements InputProcessor {
     public void setVelocity(Vector2 velocity) { this.velocity = velocity; }
     public TiledMapTileLayer getCollisionLayer(){ return this.collisionLayer; }
     public void setCollisionLayer(TiledMapTileLayer collisionLayer) { this.collisionLayer = collisionLayer; }
+    public String getOrientation() { return orientation; }
+    public void setOrientation(String orientation) { this.orientation = orientation; }
 
     // Override the draw method
     @Override
@@ -63,8 +80,6 @@ public class Player extends Sprite implements InputProcessor {
             delta = 1 / 10f;
         }
 
-        // Outside map
-
         // Applies gravity to the entity
         // velocity.y -= this.gravity * delta;
         // Clamp the gravity
@@ -80,9 +95,6 @@ public class Player extends Sprite implements InputProcessor {
         boolean collideOnX = false, collideOnY = false;
 
         if(tileNotExists(getX(), getY(), collisionLayer)){
-            System.out.println("TRUE");
-            System.out.println(getX());
-            System.out.println(getY());
             setX(oldX);
             setY(oldY);
             velocity.x = 0;
@@ -154,7 +166,25 @@ public class Player extends Sprite implements InputProcessor {
             setY(oldY);
             velocity.y = 0;
         }
+
+        // Update Animation
+        animationTime += delta;
+        if(notOutOfBound(animationTime)) {
+            if (this.velocity.x < 0) { setRegion(a.getKeyFrame(animationTime)); }
+            else if (velocity.x > 0) { setRegion(d.getKeyFrame(animationTime)); }
+            else if(velocity.y > 0){ setRegion(w.getKeyFrame(animationTime)); }
+            else if(velocity.y < 0){ setRegion(s.getKeyFrame(animationTime)); }
+            else
+            {
+                if (this.orientation.equals("w")) { setRegion(w.getKeyFrame(0)); }
+                else if(this.orientation.equals("s")) { setRegion(s.getKeyFrame(0)); }
+                else if(this.orientation.equals("a")){ setRegion(a.getKeyFrame(0)); }
+                else{ setRegion(d.getKeyFrame(0)); }
+            }
+        }
     }
+
+    public boolean notOutOfBound(float idx){ return idx > -1; }
 
     private boolean tileNotExists(float tileX, float tileY, TiledMapTileLayer map)
     {
@@ -168,18 +198,27 @@ public class Player extends Sprite implements InputProcessor {
             case Keys.W :
             case Keys.UP:
                 velocity.y = speed;
+                animationTime = 0;
+                this.setOrientation("w");
                 break;
             case Keys.A :
             case Keys.LEFT:
                 velocity.x = -speed;
+                animationTime = 0;
+                this.setOrientation("a");
                 break;
             case Keys.D:
             case Keys.RIGHT:
                 velocity.x = speed;
+                animationTime = 0;
+                this.setOrientation("d");
                 break;
             case Keys.S:
             case Keys.DOWN:
                 velocity.y = -speed;
+                animationTime = 0;
+                this.setOrientation("s");
+                break;
         }
         return true;
     }
@@ -190,17 +229,26 @@ public class Player extends Sprite implements InputProcessor {
             case Keys.W:
             case Keys.UP:
                 velocity.y = 0;
+                animationTime = 0;
+                this.setOrientation("w");
                 break;
             case Keys.A:
             case Keys.LEFT:
                 velocity.x = 0;
+                animationTime = 0;
+                this.setOrientation("a");
                 break;
             case Keys.D:
             case Keys.RIGHT:
                 velocity.x = 0;
+                animationTime = 0;
+                this.setOrientation("d");
+                break;
             case Keys.S:
             case Keys.DOWN:
                 velocity.y = 0;
+                animationTime = 0;
+                this.setOrientation("s");
         }
         return true;
     }

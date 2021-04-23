@@ -5,7 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -14,10 +17,16 @@ import com.poo.engimon.entities.Player;
 import com.poo.engimon.controller.PlayerController;
 
 public class Play implements Screen {
+    // Tiled Map
     private TiledMap map;
+    // Renderer
     private OrthogonalTiledMapRenderer renderer;
+    // Camera
     private OrthographicCamera camera;
+    // Player
     private Player player;
+    // Player Atlas
+    private TextureAtlas playerAtlas;
 
     @Override
     public void render(float delta){
@@ -37,8 +46,8 @@ public class Play implements Screen {
 
     @Override
     public void resize(int width, int height){
-        this.camera.viewportWidth = width;
-        this.camera.viewportHeight = height;
+        this.camera.viewportWidth = width / 1.2f;
+        this.camera.viewportHeight = height / 1.2f;
         // this.camera.position.set(width/2f, height/2f, 0);
         // this.camera.translate(150, 135);
         // this.camera.update();
@@ -50,9 +59,22 @@ public class Play implements Screen {
         this.map = new TmxMapLoader().load("map/Map.tmx");
         this.renderer = new OrthogonalTiledMapRenderer(this.map);
         this.camera = new OrthographicCamera();
+        // Player Atlas
+        this.playerAtlas = new TextureAtlas("entities/player.pack");
+        // Animations
+        Animation<TextureRegion> s, a, w, d;
+        s = new Animation(1/10f, playerAtlas.findRegions("s"));
+        a = new Animation(1/10f, playerAtlas.findRegions("a"));
+        w = new Animation(1/10f, playerAtlas.findRegions("w"));
+        d = new Animation(1/10f, playerAtlas.findRegions("d"));
+        s.setPlayMode(Animation.PlayMode.LOOP);
+        a.setPlayMode(Animation.PlayMode.LOOP);
+        w.setPlayMode(Animation.PlayMode.LOOP);
+        d.setPlayMode(Animation.PlayMode.LOOP);
+
         // Render and set the player
-        this.player = new Player(new Sprite(new Texture("entities/Trainer.png")),
-                (TiledMapTileLayer) this.map.getLayers().get(0), 19, 33);
+        this.player = new Player(s, a, w, d,
+                (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31);
         Gdx.input.setInputProcessor(this.player);
     }
 
@@ -71,6 +93,6 @@ public class Play implements Screen {
     public void dispose() {
         map.dispose();
         renderer.dispose();
-        player.getTexture().dispose();
+        playerAtlas.dispose();
     }
 }

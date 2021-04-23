@@ -1,0 +1,89 @@
+
+trainer_full.png
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+s
+    rotate : false
+    xy: 6, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+s
+    rotate: false
+    xy: 24, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+s
+    rotate: false
+    xy: 41, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+a
+    rotate: false
+    xy: 59, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+a
+    rotate: false
+    xy: 77, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+a
+    rotate: false
+    xy: 94, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+w
+    rotate: false
+    xy: 113, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+w
+    rotate: false
+    xy: 132, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+w
+    rotate: false
+    xy: 150, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+d
+    rotate: false
+    xy: 168, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+d
+    rotate: false
+    xy: 186, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0
+d
+    rotate: false
+    xy: 203, 7
+    size: 16, 21
+    orig: 8, 10
+    offset: 0, 0
+    index: 0

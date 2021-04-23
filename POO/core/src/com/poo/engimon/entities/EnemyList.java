@@ -60,8 +60,18 @@ public class EnemyList {
 
     public void addEnemy(){
         if (enemylist.size < maxEnemy) {
+            Random randomx = new Random();
+            Random randomy = new Random();
+            int coorX = 0;
+            int coorY = 0;
+            boolean found = false;
+            boolean collide = false;
+            coorX = randomx.nextInt(50);
+            coorY = randomy.nextInt(50);
             enemylist.add(new Enemy(s, a, w, d,
-                    (TiledMapTileLayer) map.getLayers().get(0), 30, 40));
+                    (TiledMapTileLayer) map.getLayers().get(0), coorX, coorY));
+            /*enemylist.add(new Enemy(s, a, w, d,
+                    (TiledMapTileLayer) map.getLayers().get(0), 30, 40));*/
         }
     }
     /*public void addEnemy(){

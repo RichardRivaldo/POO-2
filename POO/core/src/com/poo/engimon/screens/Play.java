@@ -4,17 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.poo.engimon.entities.Enemy;
+import com.poo.engimon.entities.EnemyList;
 import com.poo.engimon.entities.Player;
-import com.poo.engimon.controller.PlayerController;
+
+import java.util.Random;
 
 public class Play implements Screen {
     // Tiled Map
@@ -25,6 +26,8 @@ public class Play implements Screen {
     private OrthographicCamera camera;
     // Player
     private Player player;
+    //enemylist
+    private EnemyList enemyList;
     // Player Atlas
     private TextureAtlas playerAtlas;
 
@@ -41,6 +44,19 @@ public class Play implements Screen {
 
         this.renderer.getBatch().begin();
         this.player.draw(renderer.getBatch());
+        if (enemyList != null){
+            Random random = new Random();
+            int peluang = random.nextInt(100);
+            if(peluang>98){
+                enemyList.addEnemy();
+            }
+            if(enemyList.getEnemylist().size > 0){
+                for (Enemy satuenemy: enemyList.getEnemylist()) {
+                    satuenemy.draw(renderer.getBatch());
+                }
+            }
+        }
+        //this.enemy.draw(renderer.getBatch());
         this.renderer.getBatch().end();
     }
 
@@ -75,6 +91,7 @@ public class Play implements Screen {
         // Render and set the player
         this.player = new Player(s, a, w, d,
                 (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31);
+        this.enemyList = new EnemyList(10,this.map, this.renderer, this.camera);
         Gdx.input.setInputProcessor(this.player);
     }
 

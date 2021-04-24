@@ -14,6 +14,7 @@ public class Save {
 
         // Skills
         JSONObject skillDetail = new JSONObject();
+        JSONArray listSkill = new JSONArray();
         for (Skill skill : engimon.getSkill()) {
             skillDetail.put("skillName", skill.getSkillName());
             skillDetail.put("skillPower", skill.getSkillPower());
@@ -24,9 +25,10 @@ public class Save {
                 compatibleElements.add(compatible);
             }
             skillDetail.put("compatibleElements", compatibleElements);
+            listSkill.add(skillDetail);
         }
 
-        engimonDetail.put("skills", skillDetail);
+        engimonDetail.put("skills", listSkill);
 
         // Elements
         JSONArray elementDetail = new JSONArray();

@@ -128,6 +128,18 @@ public class Engimon extends AbstractEngimon {
         this.parents = parents;
     }
 
+    public void setSkills(ArrayList<Skill> list) {
+        this.skill = list;
+    }
+
+    public void setExp(int exp) {
+        this.experience = exp;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
     public void showAllSkills() {
         if (!this.skill.isEmpty()) {
             for (Skill skills : this.skill) {

@@ -45,6 +45,7 @@ public class Player {
         System.out.println("s : Move Down");
         System.out.println("d : Move Right");
         System.out.println("help : Show Help Menu");
+        System.out.println("rename: Rename your engimon\'s name");
         System.out.println("items : Show Skill Items");
         System.out.println("engimons : Show Engimons");
         System.out.println("breed : Breed Two Engimons");
@@ -84,6 +85,11 @@ public class Player {
     // Check if there is available space for inventory
     public Boolean isStillEmpty() {
         return this.getTotalItems() + 1 <= maxCapacity;
+    }
+
+    // Check if there is no Engimon anymore in Inventory
+    public Boolean isLosing(){
+        return this.engimonInvent.size() == 0;
     }
 
     // Add a new Engimon

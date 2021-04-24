@@ -5,17 +5,16 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Save {
-    static void saveGame(Player player) {
-        // Engimon Aktif
+    static JSONObject saveEngimon(Engimon engimon) {
         JSONObject engimonDetail = new JSONObject();
         // Name
-        engimonDetail.put("name", player.getActiveEngimon().getName());
+        engimonDetail.put("name", engimon.getName());
         // Species
-        engimonDetail.put("species", player.getActiveEngimon().getSpecies());
+        engimonDetail.put("species", engimon.getSpecies());
 
         // Skills
         JSONObject skillDetail = new JSONObject();
-        for (Skill skill : player.getActiveEngimon().getSkill()) {
+        for (Skill skill : engimon.getSkill()) {
             skillDetail.put("skillName", skill.getSkillName());
             skillDetail.put("skillPower", skill.getSkillPower());
             skillDetail.put("skillMastery", skill.getSkillMastery());
@@ -31,39 +30,100 @@ public class Save {
 
         // Elements
         JSONArray elementDetail = new JSONArray();
-        for (String element : player.getActiveEngimon().getElement()) {
+        for (String element : engimon.getElement()) {
             elementDetail.add(element);
         }
         engimonDetail.put("elements", elementDetail);
 
         // Level
-        engimonDetail.put("level", player.getActiveEngimon().getLevel());
+        engimonDetail.put("level", engimon.getLevel());
 
         // Experience
-        engimonDetail.put("experience", player.getActiveEngimon().getExperience());
+        engimonDetail.put("experience", engimon.getExperience());
 
         // CumulativeExperience
-        engimonDetail.put("cumulativeExperience", player.getActiveEngimon().getCumulativeExperience());
+        engimonDetail.put("cumulativeExperience", engimon.getCumulativeExperience());
 
         // Parents
         JSONArray parentDetail = new JSONArray();
-        for (String parent : player.getActiveEngimon().getParents()) {
+        for (String parent : engimon.getParents()) {
             parentDetail.add(parent);
         }
         engimonDetail.put("parents", parentDetail);
 
         // Message
-        engimonDetail.put("message", player.getActiveEngimon().getMessage());
+        engimonDetail.put("message", engimon.getMessage());
 
         // Life
-        engimonDetail.put("life", player.getActiveEngimon().getLife());
+        engimonDetail.put("life", engimon.getLife());
 
-        JSONArray engimonArray = new JSONArray();
-        engimonArray.add(engimonDetail);
+        JSONObject engimonObj = new JSONObject();
 
+        return engimonDetail;
+    }
+
+    static JSONObject saveSkillItem(SkillItem skillitem) {
+        JSONObject skillItemObj = new JSONObject();
+        JSONObject skill = new JSONObject();
+
+        Skill skillToSave = skillitem.getSkill();
+
+        skill.put("skillName", skillToSave.getSkillName());
+        skill.put("skillPower", skillToSave.getSkillPower());
+        skill.put("skillMastery", skillToSave.getSkillMastery());
+
+        JSONArray compatibleElements = new JSONArray();
+        for (String compatible : skillToSave.getCompatibleElmts()) {
+            compatibleElements.add(compatible);
+        }
+        skill.put("compatibleElements", compatibleElements);
+
+        skillItemObj.put("skill", skill);
+        skillItemObj.put("amount", skillitem.getAmount());
+
+        return skillItemObj;
+    }
+
+    static void saveGame(Player player) {
+        // Engimon Aktif
+        JSONObject engimonAktifDetail = saveEngimon(player.getActiveEngimon());
+        JSONObject engimonObj = new JSONObject();
+
+        engimonObj.put("engimonAktif", engimonAktifDetail);
+
+        JSONArray playerArray = new JSONArray();
+        playerArray.add(engimonObj);
+
+        // Inventory Engimon
+        JSONObject inventoryEngimon = new JSONObject();
+        JSONArray listEngimon = new JSONArray();
+
+        for (Engimon engimon : player.getEngimonInvent().getItemList()) {
+            JSONObject tmpEngimonObj = saveEngimon(engimon);
+            listEngimon.add(tmpEngimonObj);
+        }
+        inventoryEngimon.put("inventoryEngimon", listEngimon);
+        playerArray.add(inventoryEngimon);
+
+        // Inventory SkillItem
+        JSONObject inventorySkillItem = new JSONObject();
+        JSONArray listSkillItems = new JSONArray();
+
+        for (SkillItem skillitem : player.getSkillInvent().getItemList()) {
+            JSONObject tmpSkillItem = saveSkillItem(skillitem);
+            listSkillItems.add(tmpSkillItem);
+        }
+        inventorySkillItem.put("inventorySkillItem", listSkillItems);
+        playerArray.add(inventorySkillItem);
+
+        JSONObject playerNameObject = new JSONObject();
+        playerNameObject.put("playerName", player.getPlayerName());
+        playerArray.add(playerNameObject);
+
+        // Save to savedat.json
         try (FileWriter file = new FileWriter("savedat.json")) {
 
-            file.write(engimonArray.toJSONString());
+            file.write(playerArray.toJSONString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();

@@ -53,7 +53,13 @@ public class Engimon extends AbstractEngimon {
 
     public Engimon(String nama, String species, ArrayList<String> element) {
         this.name = nama;
-        this.element = element;
+        this.element = new ArrayList<String>();
+        if (element.size() > 2) {
+            this.element.add(element.get(0));
+            this.element.add(element.get(1));
+        } else {
+            this.element = element;
+        }
         this.species = species;
         this.level = 1;
         this.experience = 1;
@@ -106,6 +112,10 @@ public class Engimon extends AbstractEngimon {
     }
 
     // Setters
+    public void changeName(String name) {
+        this.name = name;
+    }
+
     public void setLevel(int level) {
         this.level = level;
     }

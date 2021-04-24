@@ -63,6 +63,10 @@ public class Player {
     }
 
     // Getters
+    public String getPlayerName() {
+        return this.playerName;
+    }
+
     public Inventory<Engimon> getEngimonInvent() {
         return this.engimonInvent;
     }

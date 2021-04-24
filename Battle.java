@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.*;
 
 class Battle {
     
@@ -13,14 +14,22 @@ class Battle {
     private float playerSkillPower;
     private float wildSkillPower;
 
-    public Battle(Player player, Engimon engimonPlayer, Engimon engimonWild) {
+    public Battle(Player player, Engimon engimonWild) {
         this.player = player;
-        this.engimonPlayer = engimonPlayer;
+        this.engimonPlayer = player.getActiveEngimon();
         this.engimonWild = engimonWild;
-        this.setMultiplier();
-        this.setPower();
 
-        this.doBattle();
+        if (this.engimonPlayer != null) {
+            this.setMultiplier();
+            this.setPower();
+
+            this.doBattle();
+        }
+        else {
+            System.out.println("Player tidak bisa melakukan battle");
+            System.out.println("Player membutuhkan active engimon untuk melakukan battle");
+        }
+        
     }
 
     public void checkMultiplier(String elemen1, String elemen2) {

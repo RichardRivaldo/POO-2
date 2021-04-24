@@ -1,18 +1,16 @@
-import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.*;
+import static java.lang.Math.floor;
 
 class Battle {
-    
-    private Player player;
-    private Engimon engimonPlayer;
-    private Engimon engimonWild;
-    private float engiPlayerPower;
-    private float engiWildPower;
-    private float playerMult;
-    private float wildMult;
-    private float playerSkillPower;
-    private float wildSkillPower;
+    private final Player player;
+    private final Engimon engimonPlayer;
+    private final Engimon engimonWild;
+    private double engiPlayerPower;
+    private double engiWildPower;
+    private double playerMult;
+    private double wildMult;
+    private double playerSkillPower;
+    private double wildSkillPower;
 
     public Battle(Player player, Engimon engimonWild) {
         this.player = player;
@@ -21,6 +19,7 @@ class Battle {
 
         if (this.engimonPlayer != null) {
             this.setMultiplier();
+            this.setSkillPower();
             this.setPower();
 
             this.doBattle();
@@ -32,98 +31,79 @@ class Battle {
         
     }
 
-    public void checkMultiplier(String elemen1, String elemen2) {
-        if (elemen1.equals("Fire")) {
-            if (elemen2.equals("Fire")) {
-                return 1;
-            }
-            else if (elemen2.equals("Water")) {
-                return 0;
-            }
-            else if (elemen2.equals("Electric")) {
-                return 1;
-            }
-            else if (elemen2.equals("Ground")) {
-                return 0.5;
-            }
-            else if (elemen2.equals("Ice")) {
-                return 2;
-            }
-        }
-        else if (elemen1.equals("Water")) {
-            if (elemen2.equals("Fire")) {
-                return 2;
-            }
-            else if (elemen2.equals("Water")) {
-                return 1;
-            }
-            else if (elemen2.equals("Electric")) {
-                return 0;
-            }
-            else if (elemen2.equals("Ground")) {
-                return 1;
-            }
-            else if (elemen2.equals("Ice")) {
-                return 1;
-            }
-        }
-        else if (elemen1.equals("Electric")) {
-            if (elemen2.equals("Fire")) {
-                return 1;
-            }
-            else if (elemen2.equals("Water")) {
-                return 2;
-            }
-            else if (elemen2.equals("Electric")) {
-                return 1;
-            }
-            else if (elemen2.equals("Ground")) {
-                return 0;
-            }
-            else if (elemen2.equals("Ice")) {
-                return 1.5;
-            }
-        }
-        else if (elemen1.equals("Ground")) {
-            if (elemen2.equals("Fire")) {
-                return 1.5;
-            }
-            else if (elemen2.equals("Water")) {
-                return 1;
-            }
-            else if (elemen2.equals("Electric")) {
-                return 2;
-            }
-            else if (elemen2.equals("Ground")) {
-                return 1;
-            }
-            else if (elemen2.equals("Ice")) {
-                return 0;
-            }
-        }
-        else if (elemen1.equals("Ice")) {
-            if (elemen2.equals("Fire")) {
-                return 0;
-            }
-            else if (elemen2.equals("Water")) {
-                return 1;
-            }
-            else if (elemen2.equals("Electric")) {
-                return 0.5;
-            }
-            else if (elemen2.equals("Ground")) {
-                return 2;
-            }
-            else if (elemen2.equals("Ice")) {
-                return 1;
-            }
+    public double checkMultiplier(String elemen1, String elemen2) {
+        switch (elemen1) {
+            case "Fire":
+                switch (elemen2) {
+                    case "Fire":
+                    case "Electric":
+                        return 1;
+                    case "Water":
+                        return 0;
+                    case "Ground":
+                        return 0.5;
+                    case "Ice":
+                        return 2;
+                }
+                break;
+            case "Water":
+                switch (elemen2) {
+                    case "Fire":
+                        return 2;
+                    case "Water":
+                    case "Ground":
+                    case "Ice":
+                        return 1;
+                    case "Electric":
+                        return 0;
+                }
+                break;
+            case "Electric":
+                switch (elemen2) {
+                    case "Fire":
+                    case "Electric":
+                        return 1;
+                    case "Water":
+                        return 2;
+                    case "Ground":
+                        return 0;
+                    case "Ice":
+                        return 1.5;
+                }
+                break;
+            case "Ground":
+                switch (elemen2) {
+                    case "Fire":
+                        return 1.5;
+                    case "Water":
+                    case "Ground":
+                        return 1;
+                    case "Electric":
+                        return 2;
+                    case "Ice":
+                        return 0;
+                }
+                break;
+            case "Ice":
+                switch (elemen2) {
+                    case "Fire":
+                        return 0;
+                    case "Water":
+                    case "Ice":
+                        return 1;
+                    case "Electric":
+                        return 0.5;
+                    case "Ground":
+                        return 2;
+                }
+                break;
         }
         return 0;
     }
 
     public void setMultiplier() {
-        float max1 = 0;
-        float max2 = 0;
+        double max1 = 0;
+        double max2 = 0;
 
         for (String elemen1 : this.engimonPlayer.getElement()) {
             for (String elemen2 : this.engimonWild.getElement()) {
@@ -140,8 +120,8 @@ class Battle {
     }
 
     public void setSkillPower() {
-        float sum1 = 0;
-        float sum2 = 0;
+        double sum1 = 0;
+        double sum2 = 0;
 
         for (Skill skill : this.engimonPlayer.getSkill()) {
             sum1 += skill.getSkillPower() * skill.getSkillMastery();
@@ -157,7 +137,7 @@ class Battle {
 
     public void setPower() {
         this.engiPlayerPower = this.engimonPlayer.getLevel() * this.playerMult + this.playerSkillPower;
-        this.engiWildPower = this.engimonWild.getLevel() * this.playerMult + this.playerSkillPower;
+        this.engiWildPower = this.engimonWild.getLevel() * this.wildMult + this.wildSkillPower;
     }
 
     public void showEngimonPower() {
@@ -184,7 +164,7 @@ class Battle {
         Scanner input = new Scanner(System.in);
         String answer;
         answer = input.nextLine();
-        while ((!answer.equalsIgnoreCase("Proceed")) || (!answer.equalsIgnoreCase("Cancel")) {
+        while ((!answer.equalsIgnoreCase("Proceed")) && (!answer.equalsIgnoreCase("Cancel"))) {
             answer = input.nextLine();
         }
 
@@ -203,15 +183,16 @@ class Battle {
             System.out.println(this.engimonPlayer.getName() + " memenangkan battle");
 
             this.player.getEngimonInvent().add(this.engimonWild);
-            System.out.println("Selamat Anda berhasil mendapatkan " + this.engimonWild().getName());
+            System.out.println("Selamat Anda berhasil mendapatkan " + this.engimonWild.getName());
 
-            int exp = floor((this.engimonWild.getLevel()*100)/this.engimonPlayer.getLevel());
+            int exp = (int) floor((this.engimonWild.getLevel()*100)/this.engimonPlayer.getLevel());
             this.engimonPlayer.addExp(exp);
             System.out.println(this.engimonPlayer.getName() + " mendapatkan " + exp + " xp");
 
-            SkillItem item = new (this.engimonWild.getSkill.get(0), 1);
+            SkillItem item = new SkillItem(this.engimonWild.getSkill().get(0), 1);
             this.player.getSkillInvent().add(item);
             System.out.println("Anda mendapatkan skill item " + item.toString());
+        }
 
         else {
             System.out.println(this.engimonPlayer.getName() + " kalah");
@@ -219,6 +200,5 @@ class Battle {
             this.engimonPlayer.decreaseLife();
         }
 
-        }
     }
 }

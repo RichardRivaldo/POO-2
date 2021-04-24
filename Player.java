@@ -35,6 +35,10 @@ public class Player {
         this.playerName = newName;
     }
 
+    public Engimon getActiveEngimon() {
+        return this.activeEngimon;
+    }
+
     public void showHelp() {
         System.out.println("w : Move Up");
         System.out.println("a : Move Left");
@@ -250,25 +254,25 @@ public class Player {
         }
 
         this.engimonInvent.getItemList().clear();
-        if(groupEngimon.get("FIRE") != null)
-            for(Engimon engi : groupEngimon.get("FIRE").getItemList())
+        if (groupEngimon.get("FIRE") != null)
+            for (Engimon engi : groupEngimon.get("FIRE").getItemList())
                 this.engimonInvent.add(engi);
 
-        if(groupEngimon.get("WATER") != null)
-        for(Engimon engi : groupEngimon.get("WATER").getItemList())
-            this.engimonInvent.add(engi);
+        if (groupEngimon.get("WATER") != null)
+            for (Engimon engi : groupEngimon.get("WATER").getItemList())
+                this.engimonInvent.add(engi);
 
-        if(groupEngimon.get("WIND") != null)
-        for(Engimon engi : groupEngimon.get("WIND").getItemList())
-            this.engimonInvent.add(engi);
+        if (groupEngimon.get("WIND") != null)
+            for (Engimon engi : groupEngimon.get("WIND").getItemList())
+                this.engimonInvent.add(engi);
 
-        if(groupEngimon.get("EARTH") != null)
-        for(Engimon engi : groupEngimon.get("EARTH").getItemList())
-            this.engimonInvent.add(engi);
+        if (groupEngimon.get("EARTH") != null)
+            for (Engimon engi : groupEngimon.get("EARTH").getItemList())
+                this.engimonInvent.add(engi);
 
-        if(groupEngimon.get("MORE") != null)
-        for(Engimon engi : groupEngimon.get("MORE").getItemList())
-            this.engimonInvent.add(engi);
+        if (groupEngimon.get("MORE") != null)
+            for (Engimon engi : groupEngimon.get("MORE").getItemList())
+                this.engimonInvent.add(engi);
     }
 
     // Testing
@@ -276,16 +280,16 @@ public class Player {
         Engimon active = new Engimon("Engi", "Firemon", Skill.randomElements());
         Player test = new Player(active);
 
-//        active.setMessage("Engimonnnnnn");
-//        test.showActiveEngi();
-//        test.interactWithEngi();
-//
-//        test.showAllOwnedEngi();
-//        test.showAllOwnedItem();
-//        test.showEngiInfo("Engi");
-//        test.showEngiInfo("Engia");
-//
-//        // Max 2 elements, for testing only
+        // active.setMessage("Engimonnnnnn");
+        // test.showActiveEngi();
+        // test.interactWithEngi();
+        //
+        // test.showAllOwnedEngi();
+        // test.showAllOwnedItem();
+        // test.showEngiInfo("Engi");
+        // test.showEngiInfo("Engia");
+        //
+        // // Max 2 elements, for testing only
         UniqueSkill unique = new UniqueSkill("UNIQUE", 1, 1, Skill.randomElements(), "Icemon");
         SpecialSkill special = new SpecialSkill("SPECIAL", 2, 2, Skill.randomElements(), 10);
         Skill skill = new Skill("BASIC", 1, 1, Skill.randomElements());
@@ -307,23 +311,23 @@ public class Player {
         test.addSkillItem(anotherItem3);
         test.addSkillItem(uniqueItem);
         test.addSkillItem(specialItem);
-//        test.showAllOwnedItem();
+        // test.showAllOwnedItem();
         test.addSkillItem(specialItem);
-//        test.showAllOwnedItem();
+        // test.showAllOwnedItem();
         test.addEngimon(newEngi);
 
-//        test.learnNewSkill("UNIQUE", "Engi");
-//        test.learnNewSkill("BASIC", "Engi2");
-//        test.learnNewSkill("UNIQUE", "Engi2");
-//        test.learnNewSkill("SPECIAL", "Engi2");
-//        test.learnNewSkill("BASIC2", "Engi2");
-//        test.learnNewSkill("BASIC3", "Engi2");
+        // test.learnNewSkill("UNIQUE", "Engi");
+        // test.learnNewSkill("BASIC", "Engi2");
+        // test.learnNewSkill("UNIQUE", "Engi2");
+        // test.learnNewSkill("SPECIAL", "Engi2");
+        // test.learnNewSkill("BASIC2", "Engi2");
+        // test.learnNewSkill("BASIC3", "Engi2");
 
         test.showAllOwnedEngi();
-//        test.showAllOwnedItem();
+        // test.showAllOwnedItem();
 
-//        test.learnNewSkill("BASIC4", "Engi2");
-//        test.showEngiInfo("Engi2");
+        // test.learnNewSkill("BASIC4", "Engi2");
+        // test.showEngiInfo("Engi2");
     }
 
     // Do breeding here

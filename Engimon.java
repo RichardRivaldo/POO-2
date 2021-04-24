@@ -65,6 +65,14 @@ public class Engimon extends AbstractEngimon {
     }
 
     // Getters
+    public int getLife() {
+        return this.life;
+    }
+
+    public ArrayList<String> getParents() {
+        return this.parents;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -221,8 +229,7 @@ public class Engimon extends AbstractEngimon {
 
         if (idxOfRemoved != -1) {
             this.skill.remove(idxOfRemoved);
-        }
-        else {
+        } else {
             System.out.println("Engimon ini tidak memiliki skill tersebut");
         }
     }

@@ -15,17 +15,22 @@ public class Popup extends Table {
     float height;
 
     Popup(float width, float height) {
-        super(new Skin(Gdx.files.internal("skin/golden-ui-skin.json")));
+        super(new Skin(Gdx.files.internal("skin/quantum-horizon-ui.json")));
         Texture backgroundColor = new Texture("texture/white_color_texture.png");
         TextureRegionDrawable backgroundColorDrawable = new TextureRegionDrawable(new TextureRegion(backgroundColor)); // ini bisa diganti
 
         this.setBackground(backgroundColorDrawable);
         this.text = new Label("Hello World", this.getSkin());
+        this.text.setFontScale(.85f);
 
         this.add(this.text).expand().align(Align.center).pad(20f);
 
         this.width = width;
         this.height = height;
+    }
+
+    public void setText(String text){
+        this.text.setText(text);
     }
 
     public float getPrefWidth () {

@@ -39,23 +39,26 @@ public class Player {
         return this.activeEngimon;
     }
 
-    public void showHelp() {
-        System.out.println("w : Move Up");
-        System.out.println("a : Move Left");
-        System.out.println("s : Move Down");
-        System.out.println("d : Move Right");
-        System.out.println("help : Show Help Menu");
-        System.out.println("rename: Rename your engimon\'s name");
-        System.out.println("items : Show Skill Items");
-        System.out.println("engimons : Show Engimons");
-        System.out.println("breed : Breed Two Engimons");
-        System.out.println("show : Show Active Engimons");
-        System.out.println("stats : Show Engimons Stats");
-        System.out.println("engi : Interact With Engimon");
-        System.out.println("swap : Swap Active Engimons");
-        System.out.println("learn : Learn New Skills");
-        System.out.println("battle : Challenge Engimons!");
-        System.out.println("quit : Exit The Game");
+    public String showHelp() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("w : Move Up\n");
+        sb.append("a : Move Left\n");
+        sb.append("s : Move Down\n");
+        sb.append("d : Move Right\n");
+        sb.append("help : Show Help Menu");
+        sb.append("rename: Rename your engimon\'s name\n");
+        sb.append("items : Show Skill Items\n");
+        sb.append("engimons : Show Engimons\n");
+        sb.append("breed : Breed Two Engimons\n");
+        sb.append("show : Show Active Engimons\n");
+        sb.append("stats : Show Engimons Stats\n");
+        sb.append("engi : Interact With Engimon\n");
+        sb.append("swap : Swap Active Engimons\n");
+        sb.append("learn : Learn New Skills\n");
+        sb.append("battle : Challenge Engimons!\n");
+        sb.append("quit : Exit The Game\n");
+
+        return sb.toString();
     }
 
     // Setter

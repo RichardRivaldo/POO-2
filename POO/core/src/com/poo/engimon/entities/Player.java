@@ -1,5 +1,6 @@
 package com.poo.engimon.entities;
 
+import POO.core.src.com.poo.engimon.entities.Battle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 import com.poo.engimon.screens.Play;
 import java.util.*;
+
 
 class SortSkill implements Comparator<SkillItem> {
     public int compare(SkillItem skillItem1, SkillItem skillItem2) {
@@ -338,7 +340,8 @@ public class Player extends Sprite implements InputProcessor {
                 }
                 break;
             case Keys.X:
-                // Battle
+                this.play.uiPopup.setText(this.doBattle());
+                this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
                 break;
         }
         return true;
@@ -361,7 +364,7 @@ public class Player extends Sprite implements InputProcessor {
         this.playerName = newName;
     }
 
-    public Engimon getActiveEngimon() {
+    public com.poo.engimon.entities.Engimon getActiveEngimon() {
         return this.activeEngimon;
     }
 
@@ -641,5 +644,11 @@ public class Player extends Sprite implements InputProcessor {
 
     // Do breeding here
 
-    // Do Battle here
+    public String doBattle() {
+        Battle batlle = new Battle(getClass(), /* get EngimonWild here */ );
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(batlle.doBattle());
+        return sb.toString();
+    }
 }

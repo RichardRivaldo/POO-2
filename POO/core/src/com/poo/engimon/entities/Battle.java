@@ -1,7 +1,8 @@
-import java.util.*;
+package POO.core.src.com.poo.engimon.entities;
+
 import static java.lang.Math.floor;
 
-class Battle {
+public class Battle {
     private final Player player;
     private final Engimon engimonPlayer;
     private final Engimon engimonWild;
@@ -14,7 +15,7 @@ class Battle {
 
     public Battle(Player player, Engimon engimonWild) {
         this.player = player;
-        this.engimonPlayer = player.getActiveEngimon();
+        this.engimonPlayer = this.player.getActiveEngimon();
         this.engimonWild = engimonWild;
     }
 
@@ -168,19 +169,17 @@ class Battle {
         return sb.toString();
     }
 
+    public boolean getAnswer() {
+
+    }
+
     public String setBattle() {
         StringBuilder sb = new StringBuilder();
 
         sb.append(this.showEngimonPower());
-        sb.append("\nProceed to the battle? [Proceed / Cancel]");
-        Scanner input = new Scanner(System.in);
-        String answer;
-        answer = input.nextLine();
-        while ((!answer.equalsIgnoreCase("Proceed")) && (!answer.equalsIgnoreCase("Cancel"))) {
-            answer = input.nextLine();
-        }
+        sb.append("\nProceed to the battle?");
 
-        if (answer.equalsIgnoreCase("Proceed")) {
+        if (this.getAnswer()) {
             sb.append("Battle antara ").append(this.engimonPlayer.getName()).append(" dan ").append(this.engimonWild.getName()).append(" dimulai\n");
             sb.append(this.startBattle());
         }

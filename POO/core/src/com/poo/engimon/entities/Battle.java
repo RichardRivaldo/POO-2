@@ -1,4 +1,4 @@
-package POO.core.src.com.poo.engimon.entities;
+package com.poo.engimon.entities;
 
 import static java.lang.Math.floor;
 
@@ -159,7 +159,8 @@ public class Battle {
             this.setSkillPower();
             this.setPower();
 
-            sb.append(this.setBattle());
+            sb.append(this.showEngimonPower());
+            sb.append("\nProceed to the battle?");
         }
         else {
             sb.append("Player tidak bisa melakukan battle");
@@ -169,30 +170,17 @@ public class Battle {
         return sb.toString();
     }
 
-    public boolean getAnswer() {
-
-    }
-
-    public String setBattle() {
+    public String cancelBattle(){
         StringBuilder sb = new StringBuilder();
-
-        sb.append(this.showEngimonPower());
-        sb.append("\nProceed to the battle?");
-
-        if (this.getAnswer()) {
-            sb.append("Battle antara ").append(this.engimonPlayer.getName()).append(" dan ").append(this.engimonWild.getName()).append(" dimulai\n");
-            sb.append(this.startBattle());
-        }
-        
-        else {
-            sb.append("Battle antara ").append(this.engimonPlayer.getName()).append(" dan ").append(this.engimonWild.getName()).append(" dibatalkan\n");
-        }
+        sb.append("Battle antara ").append(this.engimonPlayer.getName()).append(" dan ").append(this.engimonWild.getName()).append(" dibatalkan\n");
 
         return sb.toString();
     }
 
     public String startBattle() {
         StringBuilder sb = new StringBuilder();
+
+        sb.append("Battle antara ").append(this.engimonPlayer.getName()).append(" dan ").append(this.engimonWild.getName()).append(" dimulai\n");
 
         if (this.engiPlayerPower >= this.engiWildPower) {
             sb.append(this.engimonPlayer.getName()).append(" memenangkan battle");

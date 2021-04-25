@@ -22,7 +22,7 @@ public class EnemyList {
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     // Player Atlas
-    private TextureAtlas playerAtlas;
+    private TextureAtlas enemyAtlas;
     // Player Atlas Animation
     private Animation<TextureRegion> s, a, w, d;
     // Layer of blocks with collisions
@@ -40,15 +40,6 @@ public class EnemyList {
         this.renderer = renderer;
         this.camera = camera;
         this.maxEnemy = maxEnemy;
-        this.playerAtlas = new TextureAtlas("entities/player.pack");
-        this.s = new Animation(1/10f, playerAtlas.findRegions("s"));
-        this.a = new Animation(1/10f, playerAtlas.findRegions("a"));
-        this.w = new Animation(1/10f, playerAtlas.findRegions("w"));
-        this.d = new Animation(1/10f, playerAtlas.findRegions("d"));
-        this.s.setPlayMode(Animation.PlayMode.LOOP);
-        this.a.setPlayMode(Animation.PlayMode.LOOP);
-        this.w.setPlayMode(Animation.PlayMode.LOOP);
-        this.d.setPlayMode(Animation.PlayMode.LOOP);
         this.enemylist = new Array<Enemy>();
         /*enemylist.add(new Enemy(s, a, w, d,
                 (TiledMapTileLayer) map.getLayers().get(0), 21, 30));
@@ -56,6 +47,48 @@ public class EnemyList {
                 (TiledMapTileLayer) map.getLayers().get(0), 30, 40));
         */
         addEnemy();
+    }
+
+    private enum EngimonLiarName
+    {
+        Omnimon,
+        Skull,
+        Greymon,
+        Piedmon,
+        War_Greymon,
+        MagnaAngemon,
+        Garurumon,
+        Devimon,
+        Apocalypmon,
+        Etemon,
+        Agumon;
+
+        /**
+         * Pick a random value of the EngimonLiarName enum.
+         * @return a random EngimonLiarName.
+         */
+        public static EngimonLiarName getRandomName() {
+            Random random = new Random();
+            return values()[random.nextInt(values().length)];
+        }
+    }
+
+    public enum EngimonLiarSpesies
+    {
+        Firemon,
+        Watermon,
+        Electromon,
+        Groundmon,
+        Icemon;
+
+        /**
+         * Pick a random value of the EngimonLiarSpecses enum.
+         * @return a random EngimonLiarSpesies.
+         */
+        public static EngimonLiarSpesies getRandomSpesies() {
+            Random random = new Random();
+            return values()[random.nextInt(values().length)];
+        }
     }
 
     public void addEnemy(){
@@ -66,13 +99,43 @@ public class EnemyList {
             int coorY = 0;
             boolean found = false;
             boolean collide = false;
-            coorX = randomx.nextInt(50);
-            coorY = randomy.nextInt(50);
+            coorX = randomx.nextInt(48)+1;
+            coorY = randomy.nextInt(48)+1;
+            String nama = EngimonLiarName.getRandomName().toString();
+            String spesies = EngimonLiarSpesies.getRandomSpesies().toString();
+            Engimon engimon = new Engimon(nama, spesies, Skill.randomElements());
+            engimon.setLife(1);
+            if(Skill.randomElements().get(0)=="WATER"){
+                this.enemyAtlas = new TextureAtlas("entities/water.pack");
+            }else if(Skill.randomElements().get(0)=="FIRE"){
+                this.enemyAtlas = new TextureAtlas("entities/fire.pack");
+            }else if(Skill.randomElements().get(0)=="ELECTRIC"){
+                this.enemyAtlas = new TextureAtlas("entities/electric.pack");
+            }/*ayo tambah lagi*/else{
+                this.enemyAtlas = new TextureAtlas("entities/player.pack");
+            }
+            this.s = new Animation(1/10f, enemyAtlas.findRegions("s"));
+            this.a = new Animation(1/10f, enemyAtlas.findRegions("a"));
+            this.w = new Animation(1/10f, enemyAtlas.findRegions("w"));
+            this.d = new Animation(1/10f, enemyAtlas.findRegions("d"));
+            this.s.setPlayMode(Animation.PlayMode.LOOP);
+            this.a.setPlayMode(Animation.PlayMode.LOOP);
+            this.w.setPlayMode(Animation.PlayMode.LOOP);
+            this.d.setPlayMode(Animation.PlayMode.LOOP);
             enemylist.add(new Enemy(s, a, w, d,
-                    (TiledMapTileLayer) map.getLayers().get(0), coorX, coorY));
+                    (TiledMapTileLayer) map.getLayers().get(0), coorX, coorY, engimon));
             /*enemylist.add(new Enemy(s, a, w, d,
                     (TiledMapTileLayer) map.getLayers().get(0), 30, 40));*/
         }
+    }
+    public Enemy getEnemyTerdekat(float x_player, float y_player){
+        Enemy enemynya = null;
+        for (Enemy enemy: enemylist) {
+            if (((Math.abs(x_player - enemy.getX())<=1)) && (Math.abs(y_player-enemy.getY())<=1)){
+                enemynya = enemy;
+            }
+        }
+        return enemynya;
     }
     /*public void addEnemy(){
         if (enemylist.size < maxEnemy){

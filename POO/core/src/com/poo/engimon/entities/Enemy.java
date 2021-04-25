@@ -21,6 +21,8 @@ public class Enemy extends Sprite {
     private String orientation = "s";
     // Animation Time
     private float animationTime = 0;
+    //Engimon
+    private Engimon engimon;
 
     // Getters and setters
     public float getSpeed(){ return this.speed; }
@@ -50,7 +52,7 @@ public class Enemy extends Sprite {
     }
 
     public Enemy(Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
-                  TiledMapTileLayer collisionsLayer, int x, int y){
+                  TiledMapTileLayer collisionsLayer, int x, int y, Engimon engimon){
         // Make the sprite
         super(s.getKeyFrame(0));
 
@@ -64,6 +66,7 @@ public class Enemy extends Sprite {
         this.collisionLayer = collisionsLayer;
         this.setPosition(x * this.getCollisionLayer().getTileWidth(),
                 (this.getCollisionLayer().getHeight() - y) * this.getCollisionLayer().getTileHeight());
+        this.engimon = engimon;
     }
 
     // Override the draw method
@@ -202,6 +205,10 @@ public class Enemy extends Sprite {
                 else{ setRegion(d.getKeyFrame(0)); }
             }
         }
+    }
+
+    public Engimon getEngimonLiar(){
+        return this.engimon;
     }
 
     public boolean notOutOfBound(float idx){ return idx > -1; }

@@ -538,7 +538,12 @@ public class Player extends Sprite implements InputProcessor {
             this.sortingEngimonInventory();
             sb.append("Daftar Engimon yang dimiliki:\n");
             for (Engimon engi : this.engimonInvent.getItemList()) {
-                sb.append(engi.showStats());
+                if(engi.getLevel() > this.activeEngimon.getLevel()){
+                    sb.append("***" + engi.showStats());
+                }
+                else{
+                    sb.append(engi.showStats());
+                }
             }
         }
         return sb.toString();
@@ -577,12 +582,20 @@ public class Player extends Sprite implements InputProcessor {
     public String showAllOwnedItem() {
         StringBuilder sb = new StringBuilder();
         if (this.skillInvent.isEmptyInvent()) {
-            sb.append("Tidak ada SKill Item di Inventory");
+            sb.append("Tidak ada Skill Item di Inventory");
         } else {
             this.sortingItemInventory();
             sb.append("Daftar Skill Item yang dimiliki:\n");
             for (SkillItem item : this.skillInvent.getItemList()) {
-                sb.append(item.skillItemInfo());
+                if(item.getSkill().getSkillMastery() == 3){
+                    sb.append("***" + item.skillItemInfo());
+                }
+                else if(item.getSkill().getSkillMastery() == 2){
+                    sb.append("**" + item.skillItemInfo());
+                }
+                else if(item.getSkill().getSkillMastery() == 1){
+                    sb.append("*" + item.skillItemInfo());
+                }
             }
         }
         return sb.toString();

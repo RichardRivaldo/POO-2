@@ -112,6 +112,10 @@ public class Engimon extends AbstractEngimon {
     }
 
     // Setters
+    public void setCumulativeExperience(int cumulative) {
+        this.cumulativeExperience = cumulative;
+    }
+
     public void changeName(String name) {
         this.name = name;
     }

@@ -134,6 +134,10 @@ public class Save {
 
     public static void main(String[] args) {
         Engimon active = new Engimon("Engi", "Firemon", Skill.randomElements());
+        ArrayList<String> elements = new ArrayList<String>();
+        elements.add("FIRE");
+        active.addSkill(new Skill("Fireball", 20, 1, elements));
+        active.addSkill(new Skill("Waterball", 20, 1, elements));
         Player test = new Player(active);
 
         UniqueSkill unique = new UniqueSkill("UNIQUE", 1, 1, Skill.randomElements(), "Icemon");

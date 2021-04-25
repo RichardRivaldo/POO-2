@@ -192,10 +192,10 @@ public class Play implements Screen {
                         uiPopup.setText(msg);
                     }
                     else if(lastCommand.equals("x")){
-                        Battle battle = new Battle(getClass(), /* get EngimonWild here */ );
-                        uiPopup.setVisible(!uiPopup.isVisible());
-                        uiPopup.setText(player.setBattle(battle));
-                        String answer = player.doBattle(battle, text.getText());
+//                        Battle battle = new Battle(getClass(), /* get EngimonWild here */ );
+//                        uiPopup.setVisible(!uiPopup.isVisible());
+//                        uiPopup.setText(player.setBattle(battle));
+//                        String answer = player.doBattle(battle, text.getText());
                     }
                     text.setVisible(false);
                     Gdx.input.setInputProcessor(player);

@@ -382,6 +382,22 @@ public class Player extends Sprite implements InputProcessor {
                 this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
                 this.play.option.setVisible(false);
                 break;
+            case Keys.ENTER:
+                try{
+                    Thread.sleep(2000);
+                }
+                catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                finally {
+                    if(this.play.uiPopup.isVisible()){
+                        this.play.uiPopup.setVisible(false);
+                        this.play.text.setVisible(false);
+                        this.play.text2.setVisible(false);
+                        this.play.text3.setVisible(false);
+                    }
+                }
+            break;
         }
         return true;
     }

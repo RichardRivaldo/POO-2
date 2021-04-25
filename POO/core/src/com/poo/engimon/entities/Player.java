@@ -368,7 +368,20 @@ public class Player extends Sprite implements InputProcessor {
                     Gdx.input.setInputProcessor(this.play.uiStage);
                 }
                 break;
-
+            case Keys.SPACE:
+                if(this.play.option.getSelectedOptionIndex() == 0){
+                    this.play.uiPopup.setText("Good Luck!");
+                }
+                else{
+                    //this.setActiveEngimon(Load.extractActiveEngimon());
+                    //this.engimonInvent.setInventory(Load.extractInventoryEngimon());
+                    //this.skillInvent.setInventory(Load.extractInventorySkillItem());
+                    //this.changePlayerName(Load.extractPlayerName());
+                    this.play.uiPopup.setText("Successfully Loading!");
+                }
+                this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
+                this.play.option.setVisible(false);
+                break;
         }
         return true;
     }

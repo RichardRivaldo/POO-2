@@ -5,6 +5,15 @@ interface Breeding {
 }
 
 public class Breed implements Breeding {
+    public static boolean containsSkill(ArrayList<Skill> listSkill, String skill) {
+        for (Skill elmt : listSkill) {
+            if (elmt.getSkillName() == skill) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Engimon breed(Engimon thisEngimon, Engimon anotherEngimon) {
         Scanner scanner = new Scanner(System.in);
 
@@ -40,20 +49,20 @@ public class Breed implements Breeding {
                 if (highest1.getSkillMastery() > highest2.getSkillMastery()) {
                     if (containsSkill(engimon2tmp.getSkill(), highest1.getSkillName())) {
                         engimonAnak.addSkill(highest1);
-                        engimon1tmp.removeSkill(highest1);
-                        engimon2tmp.removeSkill(highest2);
+                        engimon1tmp.removeSkill(highest1.getSkillName());
+                        engimon2tmp.removeSkill(highest2.getSkillName());
                     } else {
                         engimonAnak.addSkill(highest1);
-                        engimon2tmp.removeSkill(highest1);
+                        engimon2tmp.removeSkill(highest1.getSkillName());
                     }
                 } else if (highest1.getSkillMastery() < highest2.getSkillMastery()) {
                     if (containsSkill(engimon1tmp.getSkill(), highest2.getSkillName())) {
                         engimonAnak.addSkill(highest2);
-                        engimon1tmp.removeSkill(highest1);
-                        engimon2tmp.removeSkill(highest2);
+                        engimon1tmp.removeSkill(highest1.getSkillName());
+                        engimon2tmp.removeSkill(highest2.getSkillName());
                     } else {
                         engimonAnak.addSkill(highest2);
-                        engimon2tmp.removeSkill(highest2);
+                        engimon2tmp.removeSkill(highest2.getSkillName());
                     }
                 } else {
                     if (highest1.getSkillName() == highest2.getSkillName()) {
@@ -62,11 +71,11 @@ public class Breed implements Breeding {
                             tmpSkill.masteryLevelUp(highest1.getSkillPower());
                         }
                         engimonAnak.addSkill(tmpSkill);
-                        engimon1tmp.removeSkill(highest1);
-                        engimon2tmp.removeSkill(highest2);
+                        engimon1tmp.removeSkill(highest1.getSkillName());
+                        engimon2tmp.removeSkill(highest2.getSkillName());
                     } else {
                         engimonAnak.addSkill(highest1);
-                        engimon1tmp.removeSkill(highest2);
+                        engimon1tmp.removeSkill(highest2.getSkillName());
                     }
                 }
             }

@@ -347,7 +347,11 @@ public class Player extends Sprite implements InputProcessor {
                 }
                 break;
             case Keys.X:
-                this.play.uiPopup.setText(this.doBattle());
+                Battle battle = new Battle(getClass(), /* get EngimonWild here */ );
+                this.play.uiPopup.setText(this.setBattle(battle));
+                Boolean answer;
+
+                this.play.uiPopup.setText(this.doBattle(battle, answer));
                 this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
                 break;
         }
@@ -688,11 +692,21 @@ public class Player extends Sprite implements InputProcessor {
         return sb.toString();
     }
 
-    public String doBattle() {
-        // Battle batlle = new Battle(getClass(), /* get EngimonWild here */ );
+    public String setBattle(Battle battle) {
         StringBuilder sb = new StringBuilder();
 
-        // sb.append(batlle.doBattle());
+        sb.append(battle.doBattle());
+        return sb.toString();
+    }
+
+    public String doBattle(Battle battle, Boolean answer) {
+        StringBuilder sb = new StringBuilder();
+        if (answer) {
+            sb.append(battle.startBattle());
+        }
+        else {
+            sb.append(battle.cancelBattle());
+        }
         return sb.toString();
     }
 }

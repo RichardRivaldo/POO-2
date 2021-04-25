@@ -2,12 +2,15 @@ package com.poo.engimon.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.math.Vector2;
+import com.poo.engimon.screens.Play;
 
 public class Player extends Sprite implements InputProcessor {
     // Gravity and speed of the entity
@@ -22,11 +25,12 @@ public class Player extends Sprite implements InputProcessor {
     private String orientation = "s";
     // Animation Time
     private float animationTime = 0;
-    //Dialog box
-    private Stage stage;
+
+    Play play;
+
     // Constructor
     public Player(Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
-                  TiledMapTileLayer collisionsLayer, int x, int y){
+                  TiledMapTileLayer collisionsLayer, int x, int y, Play play){
         // Make the sprite
         super(s.getKeyFrame(0));
 
@@ -40,6 +44,8 @@ public class Player extends Sprite implements InputProcessor {
         this.collisionLayer = collisionsLayer;
         this.setPosition(x * this.getCollisionLayer().getTileWidth(),
                 (this.getCollisionLayer().getHeight() - y) * this.getCollisionLayer().getTileHeight());
+
+        this.play = play;
     }
 
     // Getters and setters
@@ -251,6 +257,12 @@ public class Player extends Sprite implements InputProcessor {
                 velocity.y = 0;
                 animationTime = 0;
                 this.setOrientation("s");
+                break;
+
+            case Keys.M:
+                this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
+                break;
+
         }
         return true;
     }

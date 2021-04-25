@@ -11,6 +11,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.poo.engimon.entities.Enemy;
 import com.poo.engimon.entities.EnemyList;
 import com.poo.engimon.entities.Player;
@@ -20,16 +24,25 @@ import java.util.Random;
 public class Play implements Screen {
     // Tiled Map
     private TiledMap map;
+
     // Renderer
     private OrthogonalTiledMapRenderer renderer;
+
     // Camera
     private OrthographicCamera camera;
+
     // Player
     private Player player;
+
     //enemylist
     private EnemyList enemyList;
+
     // Player Atlas
     private TextureAtlas playerAtlas;
+
+    private Stage uiStage;
+    private Table root;
+    public Popup uiPopup;
 
     @Override
     public void render(float delta){
@@ -56,17 +69,16 @@ public class Play implements Screen {
                 }
             }
         }
-        //this.enemy.draw(renderer.getBatch());
+
+        this.uiStage.act(delta);
         this.renderer.getBatch().end();
+        this.uiStage.draw();
     }
 
     @Override
     public void resize(int width, int height){
         this.camera.viewportWidth = width / 1.2f;
         this.camera.viewportHeight = height / 1.2f;
-        // this.camera.position.set(width/2f, height/2f, 0);
-        // this.camera.translate(150, 135);
-        // this.camera.update();
     }
 
     @Override
@@ -89,10 +101,25 @@ public class Play implements Screen {
         d.setPlayMode(Animation.PlayMode.LOOP);
 
         // Render and set the player
-        this.player = new Player(s, a, w, d,
-                (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31);
+        this.player = new Player(s, a, w, d, (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31, this);
         this.enemyList = new EnemyList(10,this.map, this.renderer, this.camera);
         Gdx.input.setInputProcessor(this.player);
+
+        this.initPopUp();
+    }
+
+    public void initPopUp() {
+        this.uiStage = new Stage(new ScreenViewport());
+        this.uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.root = new Table();
+        this.root.setFillParent(true);
+
+        this.uiStage.addActor(this.root);
+
+        this.uiPopup = new Popup(300f, 500f);
+        this.root.add(this.uiPopup).expand().align(Align.center).pad(10f);
+
+        this.uiPopup.setVisible(false);
     }
 
     @Override

@@ -20,9 +20,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.poo.engimon.POO;
 import com.poo.engimon.controller.OptionBoxController;
 import com.poo.engimon.controller.PlayerController;
-import com.poo.engimon.entities.Enemy;
-import com.poo.engimon.entities.EnemyList;
-import com.poo.engimon.entities.Player;
+import com.poo.engimon.entities.*;
 import com.poo.engimon.ui.DialogueBox;
 import com.poo.engimon.ui.OptionBox;
 import com.poo.engimon.util.SkinGenerator;
@@ -121,7 +119,8 @@ public class Play implements Screen {
         d.setPlayMode(Animation.PlayMode.LOOP);
 
         // Render and set the player
-        this.player = new Player(s, a, w, d,
+        Engimon active = new Engimon("Engi", "Firemon", Skill.randomElements());
+        this.player = new Player(active, s, a, w, d,
                 (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31);
         this.enemyList = new EnemyList(10,this.map, this.renderer, this.camera);
 
@@ -154,7 +153,7 @@ public class Play implements Screen {
 
         DialogueBox dialogueBox = new DialogueBox(getApp().getSkin());
         //dialogueBox.setText("This is a test String");
-        dialogueBox.setText("This is a test String");
+        dialogueBox.setText(player.showActiveEngi());
         root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
         root.add(dialogTable).expand().align(Align.bottom).pad(8f);
 

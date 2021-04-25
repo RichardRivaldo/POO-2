@@ -40,7 +40,7 @@ public class EnemyList {
         this.renderer = renderer;
         this.camera = camera;
         this.maxEnemy = maxEnemy;
-        this.playerAtlas = new TextureAtlas("entities/player.pack");
+        this.playerAtlas = new TextureAtlas("entities/water.pack");
         this.s = new Animation(1/10f, playerAtlas.findRegions("s"));
         this.a = new Animation(1/10f, playerAtlas.findRegions("a"));
         this.w = new Animation(1/10f, playerAtlas.findRegions("w"));
@@ -66,8 +66,8 @@ public class EnemyList {
             int coorY = 0;
             boolean found = false;
             boolean collide = false;
-            coorX = randomx.nextInt(50);
-            coorY = randomy.nextInt(50);
+            coorX = randomx.nextInt(48)+1;
+            coorY = randomy.nextInt(48)+1;
             enemylist.add(new Enemy(s, a, w, d,
                     (TiledMapTileLayer) map.getLayers().get(0), coorX, coorY));
             /*enemylist.add(new Enemy(s, a, w, d,

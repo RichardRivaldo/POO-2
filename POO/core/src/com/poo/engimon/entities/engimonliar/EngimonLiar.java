@@ -1,9 +1,12 @@
-package com.poo.engimon.entities;
+package com.poo.engimon.entities.engimonliar;
+
+import com.poo.engimon.entities.AbstractEngimon;
+import com.poo.engimon.entities.Skill;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Engimon extends AbstractEngimon {
+public class EngimonLiar extends AbstractEngimon {
     private String name;
     private String species;
     private ArrayList<Skill> skill;
@@ -15,7 +18,7 @@ public class Engimon extends AbstractEngimon {
     private String message;
     private int life;
 
-    public Engimon() {
+    public EngimonLiar(){
         this.name = null;
         this.species = null;
         this.skill = null;
@@ -28,12 +31,11 @@ public class Engimon extends AbstractEngimon {
         this.life = 0;
     }
 
-    public Engimon(String nama, String species, ArrayList<String> element) {
+    public EngimonLiar(String nama, String species, ArrayList<String> element) {
         this.name = nama;
         this.element = new ArrayList<String>();
-        if (element.size() > 2) {
+        if (element.size() > 1) {
             this.element.add(element.get(0));
-            this.element.add(element.get(1));
         } else {
             this.element = element;
         }
@@ -41,15 +43,10 @@ public class Engimon extends AbstractEngimon {
         this.level = 1;
         this.experience = 1;
         this.cumulativeExperience = 0;
-        this.message = "I'm an Engimon";
+        this.message = "I'm an Engimon Liar";
         this.parents = new ArrayList<String>();
         this.skill = new ArrayList<Skill>();
-        this.life = 3;
-    }
-
-    // Getters
-    public int getLife() {
-        return this.life;
+        this.life = 1;
     }
 
     public ArrayList<String> getParents() {
@@ -135,6 +132,7 @@ public class Engimon extends AbstractEngimon {
         this.life += 1;
     }
 
+    @Override
     public String showStats() {
         String output = new String();
         output += "Nama : ";
@@ -168,6 +166,7 @@ public class Engimon extends AbstractEngimon {
         return output;
     }
 
+    @Override
     public void addExp(int exp) {
         this.experience += exp;
         this.cumulativeExperience += exp;
@@ -251,4 +250,3 @@ public class Engimon extends AbstractEngimon {
         return this.findSkill(skillName) != -1;
     }
 }
-

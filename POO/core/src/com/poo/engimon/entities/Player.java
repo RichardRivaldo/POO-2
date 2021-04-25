@@ -66,6 +66,7 @@ public class Player extends Sprite implements InputProcessor {
         this.activeEngimon = null;
     }
     //copy constructor
+
     public Player(Engimon active, Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
                   TiledMapTileLayer collisionsLayer, int x, int y){
         // Make the sprite
@@ -431,9 +432,12 @@ public class Player extends Sprite implements InputProcessor {
     }
 
     // Show Active Engimons Info
-    public void showActiveEngi() {
-        System.out.println("Engimon yang sedang aktif berpetualang:");
-        this.activeEngimon.showStats();
+    public String showActiveEngi() {
+        String output = new String();
+        output += "Engimon yang sedang aktif berpetualang: \n";
+        output += this.activeEngimon.showStats();
+
+        return output;
     }
 
     // Interact with active engimon

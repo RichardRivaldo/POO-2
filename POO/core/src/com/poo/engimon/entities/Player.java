@@ -1,6 +1,5 @@
 package com.poo.engimon.entities;
 
-import POO.core.src.com.poo.engimon.entities.Battle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -12,6 +11,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 import com.poo.engimon.screens.Play;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.*;
 
 
@@ -42,7 +43,7 @@ public class Player extends Sprite implements InputProcessor {
     private float animationTime = 0;
 
     private Engimon activeEngimon;
-    private static Integer maxCapacity = 10;
+    private static Integer maxCapacity = 0;
     private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
     private Inventory<SkillItem> skillInvent = new Inventory<SkillItem>();
     private String playerName;
@@ -307,7 +308,13 @@ public class Player extends Sprite implements InputProcessor {
                 this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
                 break;
             case Keys.B:
-                // Do breed here
+                play.lastCommand = "b";
+                if(!play.uiPopup.isVisible()) {
+                    this.play.text.setVisible(true);
+                    this.play.text2.setVisible(true);
+                    this.play.text3.setVisible(true);
+                    Gdx.input.setInputProcessor(this.play.uiStage);
+                }
                 break;
             case Keys.Q:
                 this.play.uiPopup.setText(this.showActiveEngi());
@@ -364,9 +371,7 @@ public class Player extends Sprite implements InputProcessor {
         this.playerName = newName;
     }
 
-    public com.poo.engimon.entities.Engimon getActiveEngimon() {
-        return this.activeEngimon;
-    }
+    public Engimon getActiveEngimon() { return this.activeEngimon; }
 
     public String showHelp() {
         StringBuilder sb = new StringBuilder();
@@ -437,13 +442,15 @@ public class Player extends Sprite implements InputProcessor {
     }
 
     // Add a new Engimon
-    public void addEngimon(Engimon newEngimon) {
+    public String addEngimon(Engimon newEngimon) {
+        StringBuilder sb = new StringBuilder();
         if (!this.isStillEmpty()) {
-            System.out.println("Inventory sudah penuh!");
+            sb.append("Inventory sudah penuh!");
         } else {
             this.engimonInvent.add(newEngimon);
-            System.out.println("Berhasil menambahkan Engimon baru!");
+            sb.append("Berhasil menambahkan Engimon baru!");
         }
+        return sb.toString();
     }
 
     // Check if a Skill Item is already in Inventory
@@ -457,19 +464,21 @@ public class Player extends Sprite implements InputProcessor {
     }
 
     // Add a new Skill Item
-    public void addSkillItem(SkillItem newSkillItem) {
+    public String addSkillItem(SkillItem newSkillItem) {
         int inInvent = this.isAlreadyInInvent(newSkillItem.getSkill().getSkillName());
+        StringBuilder sb = new StringBuilder();
 
         if (!this.isStillEmpty()) {
-            System.out.println("Inventory sudah penuh!");
+            sb.append("Inventory sudah penuh!");
         } else {
             if (inInvent != -1) {
                 this.skillInvent.getItemList().get(inInvent).addAmount(newSkillItem.getAmount());
             } else {
                 this.skillInvent.getItemList().add(newSkillItem);
             }
-            System.out.println("Berhasil menambahkan Skill Item baru!");
+            sb.append("Berhasil menambahkan Skill Item baru!");
         }
+        return sb.toString();
     }
 
     // Show All Engimons Info
@@ -478,6 +487,7 @@ public class Player extends Sprite implements InputProcessor {
         if (this.engimonInvent.isEmptyInvent()) {
             sb.append("Tidak ada Engimon di Inventory\n");
         } else {
+            this.sortingEngimonInventory();
             sb.append("Daftar Engimon yang dimiliki:\n");
             for (Engimon engi : this.engimonInvent.getItemList()) {
                 sb.append(engi.showStats());
@@ -521,6 +531,7 @@ public class Player extends Sprite implements InputProcessor {
         if (this.skillInvent.isEmptyInvent()) {
             sb.append("Tidak ada SKill Item di Inventory");
         } else {
+            this.sortingItemInventory();
             sb.append("Daftar Skill Item yang dimiliki:\n");
             for (SkillItem item : this.skillInvent.getItemList()) {
                 sb.append(item.skillItemInfo());
@@ -629,12 +640,16 @@ public class Player extends Sprite implements InputProcessor {
             for (Engimon engi : groupEngimon.get("WATER").getItemList())
                 this.engimonInvent.add(engi);
 
-        if (groupEngimon.get("WIND") != null)
-            for (Engimon engi : groupEngimon.get("WIND").getItemList())
+        if (groupEngimon.get("ICE") != null)
+            for (Engimon engi : groupEngimon.get("ICE").getItemList())
                 this.engimonInvent.add(engi);
 
-        if (groupEngimon.get("EARTH") != null)
-            for (Engimon engi : groupEngimon.get("EARTH").getItemList())
+        if (groupEngimon.get("GROUND") != null)
+            for (Engimon engi : groupEngimon.get("GROUND").getItemList())
+                this.engimonInvent.add(engi);
+
+        if (groupEngimon.get("ELECTRIC") != null)
+            for (Engimon engi : groupEngimon.get("ELECTRIC").getItemList())
                 this.engimonInvent.add(engi);
 
         if (groupEngimon.get("MORE") != null)
@@ -642,13 +657,42 @@ public class Player extends Sprite implements InputProcessor {
                 this.engimonInvent.add(engi);
     }
 
-    // Do breeding here
-
-    public String doBattle() {
-        Battle batlle = new Battle(getClass(), /* get EngimonWild here */ );
+    public String breed(String engi1, String engi2, String namaAnak){
+        Boolean find = false;
+        Engimon engimon1 = null, engimon2 = null;
         StringBuilder sb = new StringBuilder();
 
-        sb.append(batlle.doBattle());
+        for(Engimon engi: this.engimonInvent.getItemList()){
+            if(engi.getName().equals(engi1)){
+                engimon1 = engi;
+            }
+            else if(engi.getName().equals(engi2)){
+                engimon2 = engi;
+            }
+        }
+        if(engimon1 != null && engimon2 != null){
+            Breed breedTools = new Breed();
+            Engimon anakEngi = breedTools.breed(engimon1, engimon2, namaAnak);
+
+            if(anakEngi.getName() == null){
+                sb.append("Breeding Gagal!");
+            }
+            else{
+                this.addEngimon(anakEngi);
+                sb.append("Breeding " + namaAnak + " berhasil!");
+            }
+        }
+        else{
+            sb.append("Salah satu atau kedua Parent tidak ditemukan!");
+        }
+        return sb.toString();
+    }
+
+    public String doBattle() {
+        // Battle batlle = new Battle(getClass(), /* get EngimonWild here */ );
+        StringBuilder sb = new StringBuilder();
+
+        // sb.append(batlle.doBattle());
         return sb.toString();
     }
 }

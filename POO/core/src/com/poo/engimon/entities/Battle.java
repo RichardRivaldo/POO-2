@@ -1,4 +1,4 @@
-package POO.core.src.com.poo.engimon.entities;
+package com.poo.engimon.entities;
 
 import static java.lang.Math.floor;
 
@@ -170,7 +170,7 @@ public class Battle {
     }
 
     public boolean getAnswer() {
-
+        return true;
     }
 
     public String setBattle() {

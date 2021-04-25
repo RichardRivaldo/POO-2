@@ -32,7 +32,7 @@ public class Play implements Screen {
     private OrthographicCamera camera;
     // Player
     private Player player;
-    //enemylist
+    // enemylist
     private EnemyList enemyList;
     // Player Atlas
     private TextureAtlas playerAtlas;
@@ -42,6 +42,7 @@ public class Play implements Screen {
     public Popup uiPopup;
     public TextField text;
     public TextField text2;
+    public TextField text3;
     public String lastCommand;
 
     @Override
@@ -122,7 +123,7 @@ public class Play implements Screen {
             starterEngimon.addSkill(waterSkills.get(0));
         }
         else if(random == 2){
-            starterEngimon = new Engimon("My Engi", "Electromon", new ArrayList<String>(Arrays.asList("ELECTRO")));
+            starterEngimon = new Engimon("My Engi", "Electromon", new ArrayList<String>(Arrays.asList("ELECTRIC")));
             starterEngimon.addSkill(electricSkills.get(0));
         }
         else if(random == 3){
@@ -147,18 +148,26 @@ public class Play implements Screen {
     public void initPopUp() {
         this.uiStage = new Stage(new ScreenViewport());
         this.uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         this.root = new Table();
         this.root.setFillParent(true);
-
         this.uiStage.addActor(this.root);
 
         this.uiPopup = new Popup(40, 50);
         this.root.add(this.uiPopup).expand().align(Align.center).pad(10f);
+        this.root.row();
 
         this.text = new TextField("", this.uiPopup.getSkin());
         this.text2 = new TextField("", this.uiPopup.getSkin());
+        this.text3 = new TextField("", this.uiPopup.getSkin());
+
         this.root.add(text);
+        this.root.row();
         this.root.add(text2);
+        this.root.row();
+        this.root.add(text3);
+        this.root.row();
+
         text.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
             public void keyTyped(TextField text, char key) {
@@ -198,9 +207,29 @@ public class Play implements Screen {
                 }
             }
         });
+        text3.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField text3, char key) {
+                if ((key == '\r' || key == '\n')){
+                    if(lastCommand.equals("b")){
+                        String msg = player.breed(text.getText(), text2.getText(), text3.getText());
+                        uiPopup.setVisible(!uiPopup.isVisible());
+                        uiPopup.setText(msg);
+                    }
+                    text.setVisible(false);
+                    text2.setVisible(false);
+                    text3.setVisible(false);
+                    Gdx.input.setInputProcessor(player);
+                    text.setText("");
+                    text2.setText("");
+                    text3.setText("");
+                }
+            }
+        });
 
         this.text.setVisible(false);
         this.text2.setVisible(false);
+        this.text3.setVisible(false);
         this.uiPopup.setVisible(false);
     }
 

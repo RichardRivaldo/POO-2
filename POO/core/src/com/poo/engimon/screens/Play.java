@@ -136,8 +136,6 @@ public class Play implements Screen {
 
         // Render and set the player
         this.player = new Player(s, a, w, d, (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31, this, starterEngimon);
-        Engimon karel = new Engimon("Karel", "Groundmon", new ArrayList<String>(Arrays.asList("GROUND")));
-        this.player.addEngimon(karel);
         this.enemyList = new EnemyList(10,this.map, this.renderer, this.camera);
         Gdx.input.setInputProcessor(this.player);
 

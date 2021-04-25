@@ -347,13 +347,13 @@ public class Player extends Sprite implements InputProcessor {
                 }
                 break;
             case Keys.X:
-                Battle battle = new Battle(getClass(), /* get EngimonWild here */ );
-                this.play.uiPopup.setText(this.setBattle(battle));
-                Boolean answer;
-
-                this.play.uiPopup.setText(this.doBattle(battle, answer));
-                this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
+                play.lastCommand = "x";
+                if(!play.uiPopup.isVisible()) {
+                    this.play.text.setVisible(true);
+                    Gdx.input.setInputProcessor(this.play.uiStage);
+                }
                 break;
+
         }
         return true;
     }
@@ -699,9 +699,9 @@ public class Player extends Sprite implements InputProcessor {
         return sb.toString();
     }
 
-    public String doBattle(Battle battle, Boolean answer) {
+    public String doBattle(Battle battle, String answer) {
         StringBuilder sb = new StringBuilder();
-        if (answer) {
+        if (answer.equals("Yes")) {
             sb.append(battle.startBattle());
         }
         else {

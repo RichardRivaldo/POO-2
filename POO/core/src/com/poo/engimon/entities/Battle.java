@@ -160,7 +160,7 @@ public class Battle {
             this.setPower();
 
             sb.append(this.showEngimonPower());
-            sb.append("\nProceed to the battle?");
+            sb.append("\nProceed to the battle? [Yes/No]");
         }
         else {
             sb.append("Player tidak bisa melakukan battle");

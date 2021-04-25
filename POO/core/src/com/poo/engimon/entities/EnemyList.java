@@ -111,6 +111,8 @@ public class EnemyList {
                 this.enemyAtlas = new TextureAtlas("entities/fire.pack");
             }else if(Skill.randomElements().get(0)=="ELECTRIC"){
                 this.enemyAtlas = new TextureAtlas("entities/electric.pack");
+            }else if(Skill.randomElements().get(0)=="GROUND"){
+                this.enemyAtlas = new TextureAtlas("entities/ground.pack");
             }/*ayo tambah lagi*/else{
                 this.enemyAtlas = new TextureAtlas("entities/player.pack");
             }

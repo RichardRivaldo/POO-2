@@ -216,6 +216,27 @@ public class Load {
         return null;
     }
 
+    public static String extractPlayerName() {
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("savedat.json")) {
+            Object obj = jsonParser.parse(reader);
+            JSONArray data = (JSONArray) obj;
+            JSONObject dataPlayerName = (JSONObject) data.get(3);
+
+            String playerName = (String) dataPlayerName.get("playerName");
+            return playerName;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         Engimon activeEngimon = extractActiveEngimon();
         activeEngimon.showStats();
@@ -229,5 +250,7 @@ public class Load {
             System.out.println(skillitem.getAmount());
             System.out.println(skillitem.getSkillInfo());
         }
+        String playerName = extractPlayerName();
+        System.out.println(playerName);
     }
 }

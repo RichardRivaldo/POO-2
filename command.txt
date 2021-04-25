@@ -1,0 +1,2 @@
+javac -cp ".;./json-simple.jar" Engimon.java IndexOutOfBoundException.java Inventory.java Load.java Map.java Pair.java Player.java Position.java Save.java Skill.java SkillItem.java SpecialSkill.java UniqueSkill.java
+java -cp ".;./json-simple.jar" Load

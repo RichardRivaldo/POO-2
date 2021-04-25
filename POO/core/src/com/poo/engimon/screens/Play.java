@@ -44,6 +44,7 @@ public class Play implements Screen {
     public TextField text2;
     public TextField text3;
     public String lastCommand;
+    public Option option;
 
     @Override
     public void render(float delta){
@@ -168,6 +169,12 @@ public class Play implements Screen {
         this.root.add(text3);
         this.root.row();
 
+        this.option = new Option(100f, 100f);
+
+        this.option.addOption("New");
+        this.option.addOption("Load");
+        this.root.add(this.option);
+
         text.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
             public void keyTyped(TextField text, char key) {
@@ -230,6 +237,7 @@ public class Play implements Screen {
         this.text.setVisible(false);
         this.text2.setVisible(false);
         this.text3.setVisible(false);
+        this.option.setVisible(true);
         this.uiPopup.setVisible(false);
     }
 

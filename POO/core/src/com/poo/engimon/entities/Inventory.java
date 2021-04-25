@@ -15,6 +15,10 @@ public class Inventory<T> {
         this.array_inventory.add(inventory_item);
     }
 
+    public void setInventory(ArrayList<T> newInventory){
+        this.array_inventory = newInventory;
+    }
+
     // Remove Item
     public void remove(int index) throws IndexOutOfBoundException {
         if (index - 1 > this.array_inventory.size())

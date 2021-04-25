@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 import com.poo.engimon.screens.Play;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.*;
 
@@ -232,6 +231,10 @@ public class Player extends Sprite implements InputProcessor {
         switch (keycode){
             case Keys.W :
             case Keys.UP:
+                if(this.play.option.isVisible()){
+                    this.play.option.moveUp();
+                    break;
+                }
                 velocity.y = speed;
                 animationTime = 0;
                 this.setOrientation("w");
@@ -250,6 +253,10 @@ public class Player extends Sprite implements InputProcessor {
                 break;
             case Keys.S:
             case Keys.DOWN:
+                if(this.play.option.isVisible()){
+                    this.play.option.moveDown();
+                    break;
+                }
                 velocity.y = -speed;
                 animationTime = 0;
                 this.setOrientation("s");
@@ -263,6 +270,10 @@ public class Player extends Sprite implements InputProcessor {
         switch (keycode){
             case Keys.W:
             case Keys.UP:
+                if(this.play.option.isVisible()){
+                    this.play.option.moveUp();
+                    break;
+                }
                 velocity.y = 0;
                 animationTime = 0;
                 this.setOrientation("w");
@@ -281,6 +292,10 @@ public class Player extends Sprite implements InputProcessor {
                 break;
             case Keys.S:
             case Keys.DOWN:
+                if(this.play.option.isVisible()){
+                    this.play.option.moveDown();
+                    break;
+                }
                 velocity.y = 0;
                 animationTime = 0;
                 this.setOrientation("s");
@@ -347,13 +362,26 @@ public class Player extends Sprite implements InputProcessor {
                 }
                 break;
             case Keys.X:
-                Battle battle = new Battle(getClass(), /* get EngimonWild here */ );
-                this.play.uiPopup.setText(this.setBattle(battle));
+                // Battle battle = new Battle(getClass(), /* get EngimonWild here */ );
+                // this.play.uiPopup.setText(this.setBattle(battle));
                 Boolean answer;
 
-                this.play.uiPopup.setText(this.doBattle(battle, answer));
+                // this.play.uiPopup.setText(this.doBattle(battle, answer));
                 this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
                 break;
+            case Keys.ENTER:
+                if(this.play.option.getSelectedOptionIndex() == 0){
+                    this.play.uiPopup.setText("Good Luck!");
+                }
+                else{
+                    //this.setActiveEngimon(Load.extractActiveEngimon());
+                    //this.engimonInvent.setInventory(Load.extractInventoryEngimon());
+                    //this.skillInvent.setInventory(Load.extractInventorySkillItem());
+                    //this.changePlayerName(Load.extractPlayerName());
+                    this.play.uiPopup.setText("Successfully Loading!");
+                }
+                this.play.uiPopup.setVisible(!this.play.uiPopup.isVisible());
+                this.play.option.setVisible(false);
         }
         return true;
     }

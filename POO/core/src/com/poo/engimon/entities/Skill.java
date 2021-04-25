@@ -58,7 +58,7 @@ public class Skill {
 
     // Generate an array of random elements
     public static ArrayList<String> randomElements() {
-        ArrayList<String> elementsList = new ArrayList<>(Arrays.asList("FIRE", "WATER", "EARTH", "WIND"));
+        ArrayList<String> elementsList = new ArrayList<>(Arrays.asList("FIRE", "WATER", "GROUND", "ICE", "ELECTRIC"));
         ArrayList<String> returned = new ArrayList<>();
         Random rand = new Random();
         Integer numOfElements = rand.nextInt(5);

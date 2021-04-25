@@ -105,6 +105,8 @@ public class Engimon extends AbstractEngimon {
         return this.cumulativeExperience;
     }
 
+    public void setCumulativeExperience(int cumulativeExperience){ this.cumulativeExperience = cumulativeExperience;}
+
     public ArrayList<Skill> getSkill() {
         return this.skill;
     }

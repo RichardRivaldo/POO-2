@@ -1,9 +1,7 @@
 package com.poo.engimon.entities;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -40,7 +38,8 @@ public class EnemyList {
         this.renderer = renderer;
         this.camera = camera;
         this.maxEnemy = maxEnemy;
-        this.enemylist = new Array<Enemy>();
+        this.enemylist = new Array<>();
+        this.enemyAtlas = null;
         /*enemylist.add(new Enemy(s, a, w, d,
                 (TiledMapTileLayer) map.getLayers().get(0), 21, 30));
         enemylist.add(new Enemy(s, a, w, d,
@@ -95,53 +94,62 @@ public class EnemyList {
         if (enemylist.size < maxEnemy) {
             Random randomx = new Random();
             Random randomy = new Random();
-            int coorX = 0;
-            int coorY = 0;
             boolean found = false;
             boolean collide = false;
-            coorX = randomx.nextInt(48)+1;
-            coorY = randomy.nextInt(48)+1;
+            int coorX = randomx.nextInt(48)+1;
+            int coorY = randomy.nextInt(48)+1;
             String nama = EngimonLiarName.getRandomName().toString();
             String spesies = EngimonLiarSpesies.getRandomSpesies().toString();
             Engimon engimon = new Engimon(nama, spesies, Skill.randomElements());
             engimon.setLife(1);
             Skill skillnya = new Skill();
-            if(Skill.randomElements().get(0)=="WATER"){
-                this.enemyAtlas = new TextureAtlas("entities/water.pack");
-                Random randomskillwater = new Random();
-                int indexnya = randomskillwater.nextInt(Skills.waterSkills().size());
-                skillnya = Skills.waterSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="FIRE"){
-                this.enemyAtlas = new TextureAtlas("entities/fire.pack");
-                Random randomskillfire = new Random();
-                int indexnya = randomskillfire.nextInt(Skills.fireSkills().size());
-                skillnya = Skills.fireSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="ELECTRIC"){
-                this.enemyAtlas = new TextureAtlas("entities/electric.pack");
-                Random randomskillelectric = new Random();
-                int indexnya = randomskillelectric.nextInt(Skills.electricSkills().size());
-                skillnya = Skills.electricSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="GROUND"){
-                this.enemyAtlas = new TextureAtlas("entities/ground.pack");
-                Random randomskillground = new Random();
-                int indexnya = randomskillground.nextInt(Skills.groundSkills().size());
-                skillnya = Skills.groundSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="ICE"){
-                this.enemyAtlas = new TextureAtlas("entities/player.pack");
-                Random randomskillice = new Random();
-                int indexnya = randomskillice.nextInt(Skills.iceSkills().size());
-                skillnya = Skills.iceSkills().get(indexnya);
+            switch (Skill.randomElements().get(0)) {
+                case "WATER": {
+                    this.enemyAtlas = new TextureAtlas("entities/water.pack");
+                    Random randomskillwater = new Random();
+                    int indexnya = randomskillwater.nextInt(Skills.waterSkills().size());
+                    skillnya = Skills.waterSkills().get(indexnya);
+                    break;
+                }
+                case "FIRE": {
+                    this.enemyAtlas = new TextureAtlas("entities/fire.pack");
+                    Random randomskillfire = new Random();
+                    int indexnya = randomskillfire.nextInt(Skills.fireSkills().size());
+                    skillnya = Skills.fireSkills().get(indexnya);
+                    break;
+                }
+                case "ELECTRIC": {
+                    this.enemyAtlas = new TextureAtlas("entities/electric.pack");
+                    Random randomskillelectric = new Random();
+                    int indexnya = randomskillelectric.nextInt(Skills.electricSkills().size());
+                    skillnya = Skills.electricSkills().get(indexnya);
+                    break;
+                }
+                case "GROUND": {
+                    this.enemyAtlas = new TextureAtlas("entities/ground.pack");
+                    Random randomskillground = new Random();
+                    int indexnya = randomskillground.nextInt(Skills.groundSkills().size());
+                    skillnya = Skills.groundSkills().get(indexnya);
+                    break;
+                }
+                case "ICE": {
+                    this.enemyAtlas = new TextureAtlas("entities/player.pack");
+                    Random randomskillice = new Random();
+                    int indexnya = randomskillice.nextInt(Skills.iceSkills().size());
+                    skillnya = Skills.iceSkills().get(indexnya);
+                    break;
+                }
             }
             engimon.addSkill(skillnya);
-            this.s = new Animation(1/10f, enemyAtlas.findRegions("s"));
-            this.a = new Animation(1/10f, enemyAtlas.findRegions("a"));
-            this.w = new Animation(1/10f, enemyAtlas.findRegions("w"));
-            this.d = new Animation(1/10f, enemyAtlas.findRegions("d"));
+            this.s = new Animation<TextureRegion>(1/10f, this.enemyAtlas.findRegions("s"));
+            this.a = new Animation<TextureRegion>(1/10f, this.enemyAtlas.findRegions("a"));
+            this.w = new Animation<TextureRegion>(1/10f, this.enemyAtlas.findRegions("w"));
+            this.d = new Animation<TextureRegion>(1/10f, this.enemyAtlas.findRegions("d"));
             this.s.setPlayMode(Animation.PlayMode.LOOP);
             this.a.setPlayMode(Animation.PlayMode.LOOP);
             this.w.setPlayMode(Animation.PlayMode.LOOP);
             this.d.setPlayMode(Animation.PlayMode.LOOP);
-            enemylist.add(new Enemy(s, a, w, d,
+            enemylist.add(new Enemy(this.s, this.a, this.w, this.d,
                     (TiledMapTileLayer) map.getLayers().get(0), coorX, coorY, engimon));
             /*enemylist.add(new Enemy(s, a, w, d,
                     (TiledMapTileLayer) map.getLayers().get(0), 30, 40));*/

@@ -476,7 +476,7 @@ public class Player extends Sprite implements InputProcessor {
     public String swapActiveEngimon(String newEngi){
         StringBuilder sb = new StringBuilder();
         for(Engimon engi: this.engimonInvent.getItemList()){
-            if(engi.getName().equals(newEngi)){
+            if(engi.getName().equalsIgnoreCase(newEngi)){
                 this.activeEngimon = engi;
                 sb.append("Berhasil mengganti Engimon!");
                 return sb.toString();
@@ -751,8 +751,8 @@ public class Player extends Sprite implements InputProcessor {
     public String removeEngimon(String engiName){
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < this.engimonInvent.size(); i++){
-            if(this.engimonInvent.getItemList().get(i).getName().equals(engiName)){
-                if(this.engimonInvent.getItemList().get(i).getName().equals(this.activeEngimon.getName())){
+            if(this.engimonInvent.getItemList().get(i).getName().equalsIgnoreCase(engiName)){
+                if(this.engimonInvent.getItemList().get(i).getName().equalsIgnoreCase(this.activeEngimon.getName())){
                     sb.append("Tidak bisa membuang Active Engimon");
                     return sb.toString();
                 }
@@ -773,7 +773,7 @@ public class Player extends Sprite implements InputProcessor {
     public String removeSkillItem(String skillName, int amount){
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < this.skillInvent.size(); i++){
-            if(this.skillInvent.getItemList().get(i).getSkill().getSkillName().equals(skillName)){
+            if(this.skillInvent.getItemList().get(i).getSkill().getSkillName().equalsIgnoreCase(skillName)){
                 try{
                     if(this.skillInvent.getItemList().get(i).getAmount() < amount){
                         sb.append("Invalid Amount!");
@@ -799,10 +799,10 @@ public class Player extends Sprite implements InputProcessor {
         StringBuilder sb = new StringBuilder();
 
         for(Engimon engi: this.engimonInvent.getItemList()){
-            if(engi.getName().equals(engi1)){
+            if(engi.getName().equalsIgnoreCase(engi1)){
                 engimon1 = engi;
             }
-            else if(engi.getName().equals(engi2)){
+            else if(engi.getName().equalsIgnoreCase(engi2)){
                 engimon2 = engi;
             }
         }

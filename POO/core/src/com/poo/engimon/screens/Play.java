@@ -37,6 +37,8 @@ public class Play implements Screen {
     private EnemyList enemyList;
     // Player Atlas
     private TextureAtlas playerAtlas;
+    //Active Engimon
+    private ActiveEngimon activeEngimon;
     // PopUp Table Stage
     public Stage uiStage;
     public Table root;
@@ -46,6 +48,8 @@ public class Play implements Screen {
     public TextField text3;
     public String lastCommand;
     public Option option;
+    //Active Engimon Atlas
+    private TextureAtlas activeEngAtlas;
 
     @Override
     public void render(float delta){
@@ -60,6 +64,7 @@ public class Play implements Screen {
 
         this.renderer.getBatch().begin();
         this.player.draw(renderer.getBatch());
+        this.activeEngimon.draw(renderer.getBatch());
         if (enemyList != null){
             Random random = new Random();
             int peluang = random.nextInt(100);
@@ -121,28 +126,47 @@ public class Play implements Screen {
         if(random == 0){
             starterEngimon = new Engimon("My Engi", "Firemon", new ArrayList<String>(Arrays.asList("FIRE")));
             starterEngimon.addSkill(fireSkills.get(0));
+            this.activeEngAtlas = new TextureAtlas("entities/fire.pack");
         }
         else if(random == 1){
             starterEngimon = new Engimon("My Engi", "Watermon", new ArrayList<String>(Arrays.asList("WATER")));
             starterEngimon.addSkill(waterSkills.get(0));
+            this.activeEngAtlas = new TextureAtlas("entities/water.pack");
         }
         else if(random == 2){
             starterEngimon = new Engimon("My Engi", "Electromon", new ArrayList<String>(Arrays.asList("ELECTRIC")));
             starterEngimon.addSkill(electricSkills.get(0));
+            this.activeEngAtlas = new TextureAtlas("entities/electric.pack");
         }
         else if(random == 3){
             starterEngimon = new Engimon("My Engi", "Icemon", new ArrayList<String>(Arrays.asList("ICE")));
             starterEngimon.addSkill(iceSkills.get(0));
+            this.activeEngAtlas = new TextureAtlas("entities/ice.pack");
         }
         else{
             starterEngimon = new Engimon("My Engi", "Groundmon", new ArrayList<String>(Arrays.asList("GROUND")));
             starterEngimon.addSkill(groundSkills.get(0));
+            this.activeEngAtlas = new TextureAtlas("entities/ground.pack");
         }
+
+        // Animations Active
+        Animation<TextureRegion> s2, a2, w2, d2;
+        s2 = new Animation<TextureRegion> (1/10f, activeEngAtlas.findRegions("s"));
+        a2 = new Animation<TextureRegion> (1/10f, activeEngAtlas.findRegions("a"));
+        w2 = new Animation<TextureRegion> (1/10f, activeEngAtlas.findRegions("w"));
+        d2 = new Animation<TextureRegion> (1/10f, activeEngAtlas.findRegions("d"));
+        s2.setPlayMode(Animation.PlayMode.LOOP);
+        a2.setPlayMode(Animation.PlayMode.LOOP);
+        w2.setPlayMode(Animation.PlayMode.LOOP);
+        d2.setPlayMode(Animation.PlayMode.LOOP);
+
 
         // Render and set the player
         this.player = new Player(s, a, w, d, (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31, this, starterEngimon);
+        this.activeEngimon = new ActiveEngimon(this.player,s2, a2, w2, d2, (TiledMapTileLayer) this.map.getLayers().get(0), 10, 30, this);
         this.enemyList = new EnemyList(10,this.map, this.renderer, this.camera);
         Gdx.input.setInputProcessor(this.player);
+        //Gdx.input.setInputProcessor(this.activeEngimon);
 
         // Start Pop Up
         this.initPopUp();

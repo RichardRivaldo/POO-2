@@ -97,6 +97,10 @@ public class Player extends Sprite implements InputProcessor {
         super.draw(batch);
     }
 
+    public float deltaTime(){
+        return Gdx.graphics.getDeltaTime();
+    }
+
     // Check if a block is a collision block
     public boolean isCollision(float x, float y){
         Cell block = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth()), (int) (y / collisionLayer.getTileHeight()));

@@ -201,6 +201,7 @@ public class Play implements Screen {
                     else if(lastCommand.equals("x")){
                         text.setVisible(true);
                         uiPopup.setText(player.doBattle(player.getBattle(), text.getText()));
+                        enemyList.removeEnemy();
                     }
                     else if(lastCommand.equals("-")){
                         String msg = player.removeEngimon(text.getText());

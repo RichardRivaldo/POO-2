@@ -172,4 +172,11 @@ public class EnemyList {
             }
         }
     }*/
+    public void removeEnemy(){
+        for (int i = 0; i < enemylist.size; i++) {
+            if (enemylist.get(i).getEngimonLiar().getLife()<=0){
+                enemylist.removeIndex(i);
+            }
+        }
+    }
 }

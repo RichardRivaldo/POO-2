@@ -185,7 +185,9 @@ public class Battle {
         if (this.engiPlayerPower >= this.engiWildPower) {
             sb.append(this.engimonPlayer.getName()).append(" memenangkan battle\n");
 
-            this.player.addEngimon(this.engimonWild);
+            Engimon newEngimon = new Engimon (this.engimonWild.getName(), this.engimonWild.getSpecies(), this.engimonWild.getElement());
+            this.player.addEngimon(newEngimon);
+            this.engimonWild.decreaseLife();
             this.player.getEngimonInvent().getItemList().get(this.player.getEngimonInvent().size()-1).setLife(3);
             sb.append("Selamat Anda berhasil mendapatkan ").append(this.engimonWild.getName());
 
@@ -196,6 +198,7 @@ public class Battle {
             SkillItem item = new SkillItem(this.engimonWild.getSkill().get(0), 1);
             this.player.addSkillItem(item);
             sb.append("Anda mendapatkan skill item \n").append(item.toString());
+
         }
 
         else {

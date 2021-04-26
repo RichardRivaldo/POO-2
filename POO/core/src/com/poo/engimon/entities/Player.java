@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 import com.poo.engimon.screens.Play;
-
 import java.util.*;
 
 
@@ -42,7 +41,7 @@ public class Player extends Sprite implements InputProcessor {
     private float animationTime = 0;
 
     private Engimon activeEngimon;
-    private static Integer maxCapacity = 0;
+    private static Integer maxCapacity = 10;
     private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
     private Inventory<SkillItem> skillInvent = new Inventory<SkillItem>();
     private String playerName;
@@ -52,7 +51,7 @@ public class Player extends Sprite implements InputProcessor {
 
     public String answer;
 
-    // Constructor
+    // Constructorww
     public Player(Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
                   TiledMapTileLayer collisionsLayer, int x, int y, Play play, Engimon active){
         // Make the sprite
@@ -71,7 +70,7 @@ public class Player extends Sprite implements InputProcessor {
 
         this.play = play;
         this.activeEngimon = active;
-        this.engimonInvent.add(this.activeEngimon);
+        this.addEngimon(this.activeEngimon);
         this.playerName = "Ash";
     }
 
@@ -376,6 +375,21 @@ public class Player extends Sprite implements InputProcessor {
                     Gdx.input.setInputProcessor(this.play.uiStage);
                 }
                 break;
+            case Keys.MINUS:
+                play.lastCommand = "-";
+                if(!play.uiPopup.isVisible()){
+                    this.play.text.setVisible(true);
+                    Gdx.input.setInputProcessor(this.play.uiStage);
+                }
+                break;
+            case Keys.Z:
+                play.lastCommand = "z";
+                if(!play.uiPopup.isVisible()){
+                    this.play.text.setVisible(true);
+                    this.play.text2.setVisible(true);
+                    Gdx.input.setInputProcessor(this.play.uiStage);
+                }
+                break;
             case Keys.SPACE:
                 if(this.play.option.getSelectedOptionIndex() == 0){
                     this.play.uiPopup.setText("Good Luck!");
@@ -423,9 +437,7 @@ public class Player extends Sprite implements InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) { return false; }
 
-    public void changePlayerName(String newName) {
-        this.playerName = newName;
-    }
+    public void changePlayerName(String newName) { this.playerName = newName; }
 
     public Engimon getActiveEngimon() { return this.activeEngimon; }
 
@@ -446,7 +458,8 @@ public class Player extends Sprite implements InputProcessor {
         sb.append("c : Swap Active Engimons\n");
         sb.append("l : Learn New Skills\n");
         sb.append("x : Challenge Engimons!\n");
-
+        sb.append("- : Remove Engimon from Inventory\n");
+        sb.append("z : Remove Skill Item from Inventory\n");
         return sb.toString();
     }
 
@@ -573,7 +586,12 @@ public class Player extends Sprite implements InputProcessor {
     public String showActiveEngi() {
         StringBuilder sb = new StringBuilder();
         sb.append("Engimon yang sedang aktif berpetualang:\n");
-        sb.append(this.activeEngimon.showStats());
+        if(this.activeEngimon.getLevel() == -1){
+            sb.append("Tidak ada Active Engimon! Equip Engimon Lain!");
+        }
+        else {
+            sb.append(this.activeEngimon.showStats());
+        }
         return sb.toString();
     }
 
@@ -726,6 +744,51 @@ public class Player extends Sprite implements InputProcessor {
                 this.engimonInvent.add(engi);
     }
 
+    public String removeEngimon(String engiName){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < this.engimonInvent.size(); i++){
+            if(this.engimonInvent.getItemList().get(i).getName().equals(engiName)){
+                if(this.engimonInvent.getItemList().get(i).getName().equals(this.activeEngimon.getName())){
+                    sb.append("Tidak bisa membuang Active Engimon");
+                    return sb.toString();
+                }
+                else {
+                    try {
+                        this.engimonInvent.remove(i);
+                        sb.append("Berhasil membuang Engimon!");
+                        return sb.toString();
+                    } catch (Exception e) {
+                        // Do nothing
+                    }
+                }
+            }
+        }
+        return sb.append("Engimon tidak ditemukan!").toString();
+    }
+
+    public String removeSkillItem(String skillName, int amount){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < this.skillInvent.size(); i++){
+            if(this.skillInvent.getItemList().get(i).getSkill().getSkillName().equals(skillName)){
+                try{
+                    if(this.skillInvent.getItemList().get(i).getAmount() < amount){
+                        sb.append("Invalid Amount!");
+                        return sb.toString();
+                    }
+                    else{
+                        this.decOrRemove(i);
+                        sb.append("Berhasil membuang Skill Item!");
+                        return sb.toString();
+                    }
+                }
+                catch(Exception e){
+                    // Do nothing
+                }
+            }
+        }
+        return sb.append("Skill Item tidak ditemukan!").toString();
+    }
+
     public String breed(String engi1, String engi2, String namaAnak){
         Boolean find = false;
         Engimon engimon1 = null, engimon2 = null;
@@ -768,6 +831,10 @@ public class Player extends Sprite implements InputProcessor {
         StringBuilder sb = new StringBuilder();
         if (answer.equalsIgnoreCase("yes")) {
             sb.append(battle.startBattle());
+            if(this.activeEngimon.getLife() == 0){
+                this.engimonInvent.getItemList().remove(this.engimonInvent.getItemList().indexOf(this.activeEngimon));
+                this.activeEngimon = new Engimon();
+            }
         }
         else {
             sb.append(battle.cancelBattle());

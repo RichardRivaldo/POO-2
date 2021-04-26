@@ -74,11 +74,14 @@ public class Play implements Screen {
         }
         // UI Act
         this.uiStage.act(delta);
-
         this.renderer.getBatch().end();
 
         // Draw UI
         this.uiStage.draw();
+
+        if(player.isLosing()){
+            Gdx.app.exit();
+        }
     }
 
     @Override
@@ -196,16 +199,13 @@ public class Play implements Screen {
                         uiPopup.setText(msg);
                     }
                     else if(lastCommand.equals("x")){
-                        //text.setText("");
-
                         text.setVisible(true);
-                        /*try{
-                            Thread.sleep(2000);
-                        }
-                        catch (Exception e){
-                            System.out.println(e.getMessage());
-                        }*/
                         uiPopup.setText(player.doBattle(player.getBattle(), text.getText()));
+                    }
+                    else if(lastCommand.equals("-")){
+                        String msg = player.removeEngimon(text.getText());
+                        uiPopup.setVisible(!uiPopup.isVisible());
+                        uiPopup.setText(msg);
                     }
                     text.setVisible(false);
                     Gdx.input.setInputProcessor(player);
@@ -219,6 +219,11 @@ public class Play implements Screen {
                 if ((key == '\r' || key == '\n')){
                     if(lastCommand.equals("l")){
                         String msg = player.learnNewSkill(text.getText(), text2.getText());
+                        uiPopup.setVisible(!uiPopup.isVisible());
+                        uiPopup.setText(msg);
+                    }
+                    else if(lastCommand.equals("z")){
+                        String msg = player.removeSkillItem(text.getText(), Integer.parseInt(text2.getText()));
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(msg);
                     }

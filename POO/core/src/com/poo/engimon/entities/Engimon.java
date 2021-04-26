@@ -156,9 +156,7 @@ public class Engimon extends AbstractEngimon {
         return sb.toString();
     }
 
-    public void decreaseLife() {
-        this.life -= 1;
-    }
+    public void decreaseLife() { this.life -= 1; }
 
     public void addLife() {
         this.life += 1;
@@ -167,6 +165,7 @@ public class Engimon extends AbstractEngimon {
     public String showStats() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Nama : %s\n", this.getName()));
+        sb.append("Life : " + this.getLife() + "\n");
         sb.append(String.format("Spesies : %s\n", this.getSpecies()));
         sb.append("Parents : ");
 

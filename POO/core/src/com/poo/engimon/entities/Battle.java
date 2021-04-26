@@ -163,7 +163,7 @@ public class Battle {
             sb.append("\nProceed to the battle? [Yes/No]");
         }
         else {
-            sb.append("Player tidak bisa melakukan battle");
+            sb.append("Player tidak bisa melakukan battle\n");
             sb.append("Player membutuhkan active engimon untuk melakukan battle");
         }
 
@@ -183,18 +183,18 @@ public class Battle {
         sb.append("Battle antara ").append(this.engimonPlayer.getName()).append(" dan ").append(this.engimonWild.getName()).append(" dimulai\n");
 
         if (this.engiPlayerPower >= this.engiWildPower) {
-            sb.append(this.engimonPlayer.getName()).append(" memenangkan battle");
+            sb.append(this.engimonPlayer.getName()).append(" memenangkan battle\n");
 
-            this.player.getEngimonInvent().add(this.engimonWild);
+            this.player.addEngimon(this.engimonWild);
             sb.append("Selamat Anda berhasil mendapatkan ").append(this.engimonWild.getName());
 
             int exp = (int) floor((this.engimonWild.getLevel()*100)/this.engimonPlayer.getLevel());
             this.engimonPlayer.addExp(exp);
-            sb.append(this.engimonPlayer.getName()).append(" mendapatkan ").append(exp).append(" xp");
+            sb.append(this.engimonPlayer.getName()).append(" mendapatkan ").append(exp).append(" xp\n");
 
             SkillItem item = new SkillItem(this.engimonWild.getSkill().get(0), 1);
-            this.player.getSkillInvent().add(item);
-            sb.append("Anda mendapatkan skill item ").append(item.toString());
+            this.player.addSkillItem(item);
+            sb.append("Anda mendapatkan skill item \n").append(item.toString());
         }
 
         else {

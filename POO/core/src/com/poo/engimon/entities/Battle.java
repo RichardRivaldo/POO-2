@@ -186,9 +186,10 @@ public class Battle {
             sb.append(this.engimonPlayer.getName()).append(" memenangkan battle\n");
 
             this.player.addEngimon(this.engimonWild);
+            this.player.getEngimonInvent().getItemList().get(this.player.getEngimonInvent().size()-1).setLife(3);
             sb.append("Selamat Anda berhasil mendapatkan ").append(this.engimonWild.getName());
 
-            int exp = (int) floor((this.engimonWild.getLevel()*100)/this.engimonPlayer.getLevel());
+            int exp = this.engimonWild.getLevel()*100/this.engimonPlayer.getLevel();
             this.engimonPlayer.addExp(exp);
             sb.append(this.engimonPlayer.getName()).append(" mendapatkan ").append(exp).append(" xp\n");
 

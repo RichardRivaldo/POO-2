@@ -72,7 +72,6 @@ public class Play implements Screen {
                 }
             }
         }
-
         // UI Act
         this.uiStage.act(delta);
 
@@ -146,6 +145,10 @@ public class Play implements Screen {
         this.initPopUp();
     }
 
+    public EnemyList getEnemyList() {
+        return enemyList;
+    }
+
     // Init Pop Up
     public void initPopUp() {
         this.uiStage = new Stage(new ScreenViewport());
@@ -194,9 +197,7 @@ public class Play implements Screen {
                     }
                     else if(lastCommand.equals("x")){
                         //text.setText("");
-                        final Battle battle = new Battle(player, enemyList.getEnemyTerdekat(player.xpos(), player.ypos()).getEngimonLiar());
-                        uiPopup.setVisible(!uiPopup.isVisible());
-                        uiPopup.setText(player.setBattle(battle));
+
                         text.setVisible(true);
                         /*try{
                             Thread.sleep(2000);
@@ -204,7 +205,7 @@ public class Play implements Screen {
                         catch (Exception e){
                             System.out.println(e.getMessage());
                         }*/
-                        uiPopup.setText(player.doBattle(battle, text.getText()));
+                        uiPopup.setText(player.doBattle(player.getBattle(), text.getText()));
                     }
                     text.setVisible(false);
                     Gdx.input.setInputProcessor(player);

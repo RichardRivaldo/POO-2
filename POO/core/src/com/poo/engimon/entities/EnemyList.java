@@ -46,7 +46,6 @@ public class EnemyList {
         enemylist.add(new Enemy(s, a, w, d,
                 (TiledMapTileLayer) map.getLayers().get(0), 30, 40));
         */
-        addEnemy();
     }
 
     private enum EngimonLiarName
@@ -106,27 +105,27 @@ public class EnemyList {
             Engimon engimon = new Engimon(nama, spesies, Skill.randomElements());
             engimon.setLife(1);
             Skill skillnya = new Skill();
-            if(Skill.randomElements().get(0)=="WATER"){
+            if(Skill.randomElements().get(0).equals("WATER")){
                 this.enemyAtlas = new TextureAtlas("entities/water.pack");
                 Random randomskillwater = new Random();
                 int indexnya = randomskillwater.nextInt(Skills.waterSkills().size());
                 skillnya = Skills.waterSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="FIRE"){
+            }else if(Skill.randomElements().get(0).equals("FIRE")){
                 this.enemyAtlas = new TextureAtlas("entities/fire.pack");
                 Random randomskillfire = new Random();
                 int indexnya = randomskillfire.nextInt(Skills.fireSkills().size());
                 skillnya = Skills.fireSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="ELECTRIC"){
+            }else if(Skill.randomElements().get(0).equals("ELECTRIC")){
                 this.enemyAtlas = new TextureAtlas("entities/electric.pack");
                 Random randomskillelectric = new Random();
                 int indexnya = randomskillelectric.nextInt(Skills.electricSkills().size());
                 skillnya = Skills.electricSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="GROUND"){
+            }else if(Skill.randomElements().get(0).equals("GROUND")){
                 this.enemyAtlas = new TextureAtlas("entities/ground.pack");
                 Random randomskillground = new Random();
                 int indexnya = randomskillground.nextInt(Skills.groundSkills().size());
                 skillnya = Skills.groundSkills().get(indexnya);
-            }else if(Skill.randomElements().get(0)=="ICE"){
+            }else if(Skill.randomElements().get(0).equals("ICE")){
                 this.enemyAtlas = new TextureAtlas("entities/player.pack");
                 Random randomskillice = new Random();
                 int indexnya = randomskillice.nextInt(Skills.iceSkills().size());

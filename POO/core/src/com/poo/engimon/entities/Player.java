@@ -46,6 +46,7 @@ public class Player extends Sprite implements InputProcessor {
     private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
     private Inventory<SkillItem> skillInvent = new Inventory<SkillItem>();
     private String playerName;
+    private Battle battle;
 
     private Play play;
 
@@ -87,6 +88,8 @@ public class Player extends Sprite implements InputProcessor {
     public void setOrientation(String orientation) { this.orientation = orientation; }
     public float xpos(){ return this.getX(); }
     public float ypos(){ return this.getY(); }
+    public Battle getBattle() { return battle; }
+    public void setPBattle(Battle battle){ this.battle = battle;}
 
     // Override the draw method
     @Override
@@ -366,6 +369,9 @@ public class Player extends Sprite implements InputProcessor {
             case Keys.X:
                 play.lastCommand = "x";
                 if(!play.uiPopup.isVisible()) {
+                    this.battle = new Battle(this, play.getEnemyList().getEnemyTerdekat(this.xpos(), this.ypos()).getEngimonLiar());
+                    this.play.uiPopup.setText(this.setBattle(battle));
+                    this.play.uiPopup.setVisible(true);
                     this.play.text.setVisible(true);
                     Gdx.input.setInputProcessor(this.play.uiStage);
                 }
@@ -760,7 +766,7 @@ public class Player extends Sprite implements InputProcessor {
 
     public String doBattle(Battle battle, String answer) {
         StringBuilder sb = new StringBuilder();
-        if (answer.equals("yes")) {
+        if (answer.equalsIgnoreCase("yes")) {
             sb.append(battle.startBattle());
         }
         else {

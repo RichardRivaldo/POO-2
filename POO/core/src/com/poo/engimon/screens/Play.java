@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.poo.engimon.entities.*;
 
@@ -66,7 +67,7 @@ public class Play implements Screen {
                 enemyList.addEnemy();
             }
             if(enemyList.getEnemylist().size > 0){
-                for (Enemy satuenemy: enemyList.getEnemylist()) {
+                for (Enemy satuenemy: new Array.ArrayIterator<>(enemyList.getEnemylist())) {
                     satuenemy.draw(renderer.getBatch());
                 }
             }
@@ -177,7 +178,7 @@ public class Play implements Screen {
 
         text.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
-            public void keyTyped(TextField text, char key) {
+            public void keyTyped(final TextField text, char key) {
                 if ((key == '\r' || key == '\n')){
                     if(lastCommand.equals("r")){
                         player.getActiveEngimon().changeName(text.getText());
@@ -192,10 +193,18 @@ public class Play implements Screen {
                         uiPopup.setText(msg);
                     }
                     else if(lastCommand.equals("x")){
-                        Battle battle = new Battle(player, enemyList.getEnemyTerdekat(player.getX(), player.getY()).getEngimonLiar() );
+                        //text.setText("");
+                        final Battle battle = new Battle(player, enemyList.getEnemyTerdekat(player.xpos(), player.ypos()).getEngimonLiar());
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(player.setBattle(battle));
-                        String answer = player.doBattle(battle, text.getText());
+                        text.setVisible(true);
+                        /*try{
+                            Thread.sleep(2000);
+                        }
+                        catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }*/
+                        uiPopup.setText(player.doBattle(battle, text.getText()));
                     }
                     text.setVisible(false);
                     Gdx.input.setInputProcessor(player);

@@ -198,7 +198,7 @@ public class Battle {
         }
 
         else {
-            sb.append(this.engimonPlayer.getName()).append(" kalah");
+            sb.append(this.engimonPlayer.getName()).append(" kalah\n");
             sb.append(this.engimonWild.getName()).append(" kabur");
             this.engimonPlayer.decreaseLife();
         }

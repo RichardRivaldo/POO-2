@@ -85,6 +85,8 @@ public class Player extends Sprite implements InputProcessor {
     public void setCollisionLayer(TiledMapTileLayer collisionLayer) { this.collisionLayer = collisionLayer; }
     public String getOrientation() { return orientation; }
     public void setOrientation(String orientation) { this.orientation = orientation; }
+    public float xpos(){ return this.getX(); }
+    public float ypos(){ return this.getY(); }
 
     // Override the draw method
     @Override
@@ -758,7 +760,7 @@ public class Player extends Sprite implements InputProcessor {
 
     public String doBattle(Battle battle, String answer) {
         StringBuilder sb = new StringBuilder();
-        if (answer.equals("Yes")) {
+        if (answer.equals("yes")) {
             sb.append(battle.startBattle());
         }
         else {

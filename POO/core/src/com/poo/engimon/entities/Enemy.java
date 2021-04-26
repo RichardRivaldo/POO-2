@@ -38,8 +38,8 @@ public class Enemy extends Sprite {
 
     Random random = new Random();
     private void randomvector(){
-        int oneTwoX = random.nextInt(2) + 1;
-        int oneTwoY = random.nextInt(2) + 1;
+        int oneTwoX = random.nextInt(20)+1;
+        int oneTwoY = random.nextInt(20)+1;
         if (oneTwoX == 1 && oneTwoY == 1){
             setVelocity(new Vector2((-1*speed),(-1*speed)));
         }else if (oneTwoX == 1 && oneTwoY == 2){
@@ -48,7 +48,18 @@ public class Enemy extends Sprite {
             setVelocity(new Vector2((speed),(-1*speed)));
         }else if (oneTwoX == 2 && oneTwoY == 2){
             setVelocity(new Vector2((speed),(speed)));
+        }else if (oneTwoX >= 3 && oneTwoY >= 3){
+            setVelocity(new Vector2(0,0));
+        }else if (oneTwoX >= 3 && oneTwoY == 1){
+            setVelocity(new Vector2(0,(-1*speed)));
+        }else if (oneTwoX == 1){
+            setVelocity(new Vector2((-1*speed),0));
+        }else if (oneTwoX >= 3){
+            setVelocity(new Vector2(0,(speed)));
+        }else {
+            setVelocity(new Vector2((speed),0));
         }
+
     }
 
     public Enemy(Animation<TextureRegion> s, Animation<TextureRegion> a, Animation<TextureRegion> w, Animation<TextureRegion> d,
@@ -75,7 +86,7 @@ public class Enemy extends Sprite {
         //this.move(Gdx.graphics.getDeltaTime());
         Random randomgerak = new Random();
         int peluang = randomgerak.nextInt(100) + 1;
-        if (peluang >98){
+        if (peluang > 98){
             this.randomvector();
         }
         this.move((float) 0.01);
@@ -94,6 +105,15 @@ public class Enemy extends Sprite {
     public void move(int x, int y){
         this.setX(getX() + x);
         this.setY(getY() + y);
+    }
+
+    //Coordinate
+    public float xpos(){
+        return this.getX();
+    }
+
+    public float ypos(){
+        return this.getY();
     }
 
     // Update the Player

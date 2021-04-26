@@ -105,17 +105,34 @@ public class EnemyList {
             String spesies = EngimonLiarSpesies.getRandomSpesies().toString();
             Engimon engimon = new Engimon(nama, spesies, Skill.randomElements());
             engimon.setLife(1);
+            Skill skillnya = new Skill();
             if(Skill.randomElements().get(0)=="WATER"){
                 this.enemyAtlas = new TextureAtlas("entities/water.pack");
+                Random randomskillwater = new Random();
+                int indexnya = randomskillwater.nextInt(Skills.waterSkills().size());
+                skillnya = Skills.waterSkills().get(indexnya);
             }else if(Skill.randomElements().get(0)=="FIRE"){
                 this.enemyAtlas = new TextureAtlas("entities/fire.pack");
+                Random randomskillfire = new Random();
+                int indexnya = randomskillfire.nextInt(Skills.fireSkills().size());
+                skillnya = Skills.fireSkills().get(indexnya);
             }else if(Skill.randomElements().get(0)=="ELECTRIC"){
                 this.enemyAtlas = new TextureAtlas("entities/electric.pack");
+                Random randomskillelectric = new Random();
+                int indexnya = randomskillelectric.nextInt(Skills.electricSkills().size());
+                skillnya = Skills.electricSkills().get(indexnya);
             }else if(Skill.randomElements().get(0)=="GROUND"){
                 this.enemyAtlas = new TextureAtlas("entities/ground.pack");
-            }/*ayo tambah lagi*/else{
+                Random randomskillground = new Random();
+                int indexnya = randomskillground.nextInt(Skills.groundSkills().size());
+                skillnya = Skills.groundSkills().get(indexnya);
+            }else if(Skill.randomElements().get(0)=="ICE"){
                 this.enemyAtlas = new TextureAtlas("entities/player.pack");
+                Random randomskillice = new Random();
+                int indexnya = randomskillice.nextInt(Skills.iceSkills().size());
+                skillnya = Skills.iceSkills().get(indexnya);
             }
+            engimon.addSkill(skillnya);
             this.s = new Animation(1/10f, enemyAtlas.findRegions("s"));
             this.a = new Animation(1/10f, enemyAtlas.findRegions("a"));
             this.w = new Animation(1/10f, enemyAtlas.findRegions("w"));
@@ -131,13 +148,14 @@ public class EnemyList {
         }
     }
     public Enemy getEnemyTerdekat(float x_player, float y_player){
-        Enemy enemynya = null;
-        for (Enemy enemy: enemylist) {
-            if (((Math.abs(x_player - enemy.getX())<=1)) && (Math.abs(y_player-enemy.getY())<=1)){
+        /*Enemy enemynya = null;
+        for (Enemy enemy: new Array.ArrayIterator<>(enemylist)) {
+            if (((Math.abs(x_player - enemy.xpos())<=5)) && (Math.abs(y_player-enemy.ypos())<=5)){
                 enemynya = enemy;
             }
         }
-        return enemynya;
+        return enemynya;*/
+        return enemylist.first();
     }
     /*public void addEnemy(){
         if (enemylist.size < maxEnemy){

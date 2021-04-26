@@ -133,7 +133,7 @@ public class EnemyList {
                     break;
                 }
                 case "ICE": {
-                    this.enemyAtlas = new TextureAtlas("entities/player.pack");
+                    this.enemyAtlas = new TextureAtlas("entities/ice.pack");
                     Random randomskillice = new Random();
                     int indexnya = randomskillice.nextInt(Skills.iceSkills().size());
                     skillnya = Skills.iceSkills().get(indexnya);

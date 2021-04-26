@@ -210,24 +210,24 @@ public class Play implements Screen {
             @Override
             public void keyTyped(final TextField text, char key) {
                 if ((key == '\r' || key == '\n')){
-                    if(lastCommand.equals("r")){
+                    if(lastCommand.equalsIgnoreCase("r")){
                         player.getActiveEngimon().changeName(text.getText());
                     }
-                    else if(lastCommand.equals("p")){
+                    else if(lastCommand.equalsIgnoreCase("p")){
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(player.showEngiInfo(text.getText()));
                     }
-                    else if(lastCommand.equals("c")){
+                    else if(lastCommand.equalsIgnoreCase("c")){
                         String msg = player.swapActiveEngimon(text.getText());
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(msg);
                     }
-                    else if(lastCommand.equals("x")){
+                    else if(lastCommand.equalsIgnoreCase("x")){
                         text.setVisible(true);
                         uiPopup.setText(player.doBattle(player.getBattle(), text.getText()));
                         enemyList.removeEnemy();
                     }
-                    else if(lastCommand.equals("-")){
+                    else if(lastCommand.equalsIgnoreCase("-")){
                         String msg = player.removeEngimon(text.getText());
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(msg);
@@ -242,12 +242,12 @@ public class Play implements Screen {
             @Override
             public void keyTyped(TextField text2, char key) {
                 if ((key == '\r' || key == '\n')){
-                    if(lastCommand.equals("l")){
+                    if(lastCommand.equalsIgnoreCase("l")){
                         String msg = player.learnNewSkill(text.getText(), text2.getText());
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(msg);
                     }
-                    else if(lastCommand.equals("z")){
+                    else if(lastCommand.equalsIgnoreCase("z")){
                         String msg = player.removeSkillItem(text.getText(), Integer.parseInt(text2.getText()));
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(msg);
@@ -264,7 +264,7 @@ public class Play implements Screen {
             @Override
             public void keyTyped(TextField text3, char key) {
                 if ((key == '\r' || key == '\n')){
-                    if(lastCommand.equals("b")){
+                    if(lastCommand.equalsIgnoreCase("b")){
                         String msg = player.breed(text.getText(), text2.getText(), text3.getText());
                         uiPopup.setVisible(!uiPopup.isVisible());
                         uiPopup.setText(msg);

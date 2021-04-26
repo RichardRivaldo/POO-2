@@ -216,7 +216,7 @@ public class Engimon extends AbstractEngimon {
     public int findSkill(String name) {
         if (!this.skill.isEmpty()) {
             for (Skill skills : this.skill) {
-                if (skills.getSkillName().equals(name)) {
+                if (skills.getSkillName().equalsIgnoreCase(name)) {
                     return this.skill.indexOf(skills);
                 }
             }
@@ -239,7 +239,7 @@ public class Engimon extends AbstractEngimon {
             System.out.print("Ingin ganti skill? (y/n) : ");
             choice = scanner.nextLine();
 
-            if (choice.equals("y")) {
+            if (choice.equalsIgnoreCase("y")) {
                 System.out.print("Masukkan nama skill yang ingin diganti : ");
                 String skillName = scanner.nextLine();
                 this.removeSkill(skillName);

@@ -25,7 +25,7 @@ public class UniqueSkill extends Skill {
 
     // Learnable or not
     public Boolean isSkillLearnable(ArrayList<String> engimonElmt, String species) {
-        return super.isSkillLearnable(engimonElmt) && species.equals(this.uniqueSpecies);
+        return super.isSkillLearnable(engimonElmt) && species.equalsIgnoreCase(this.uniqueSpecies);
     }
 
     // String for Skill Info

@@ -219,9 +219,9 @@ public class Enemy extends Sprite {
             else if(velocity.y < 0){ setRegion(s.getKeyFrame(animationTime)); }
             else
             {
-                if (this.orientation.equals("w")) { setRegion(w.getKeyFrame(0)); }
-                else if(this.orientation.equals("s")) { setRegion(s.getKeyFrame(0)); }
-                else if(this.orientation.equals("a")){ setRegion(a.getKeyFrame(0)); }
+                if (this.orientation.equalsIgnoreCase("w")) { setRegion(w.getKeyFrame(0)); }
+                else if(this.orientation.equalsIgnoreCase("s")) { setRegion(s.getKeyFrame(0)); }
+                else if(this.orientation.equalsIgnoreCase("a")){ setRegion(a.getKeyFrame(0)); }
                 else{ setRegion(d.getKeyFrame(0)); }
             }
         }

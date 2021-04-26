@@ -218,9 +218,9 @@ public class Player extends Sprite implements InputProcessor {
             else if(velocity.y < 0){ setRegion(s.getKeyFrame(animationTime)); }
             else
             {
-                if (this.orientation.equals("w")) { setRegion(w.getKeyFrame(0)); }
-                else if(this.orientation.equals("s")) { setRegion(s.getKeyFrame(0)); }
-                else if(this.orientation.equals("a")){ setRegion(a.getKeyFrame(0)); }
+                if (this.orientation.equalsIgnoreCase("w")) { setRegion(w.getKeyFrame(0)); }
+                else if(this.orientation.equalsIgnoreCase("s")) { setRegion(s.getKeyFrame(0)); }
+                else if(this.orientation.equalsIgnoreCase("a")){ setRegion(a.getKeyFrame(0)); }
                 else{ setRegion(d.getKeyFrame(0)); }
             }
         }
@@ -529,7 +529,7 @@ public class Player extends Sprite implements InputProcessor {
     // Check if a Skill Item is already in Inventory
     public int isAlreadyInInvent(String skillName) {
         for (SkillItem item : this.skillInvent.getItemList()) {
-            if (item.getSkill().getSkillName().equals(skillName)) {
+            if (item.getSkill().getSkillName().equalsIgnoreCase(skillName)) {
                 return this.skillInvent.getItemList().indexOf(item);
             }
         }
@@ -578,7 +578,7 @@ public class Player extends Sprite implements InputProcessor {
     public String showEngiInfo(String engiName) {
         StringBuilder sb = new StringBuilder();
         for (Engimon engi : this.engimonInvent.getItemList()) {
-            if (engi.getName().equals(engiName)) {
+            if (engi.getName().equalsIgnoreCase(engiName)) {
                 sb.append(engi.showStats());
                 return sb.toString();
             }
@@ -634,7 +634,7 @@ public class Player extends Sprite implements InputProcessor {
     // If an Engimon is already owned
     public int isAlreadyOwned(String engiName) {
         for (Engimon engi : this.engimonInvent.getItemList()) {
-            if (engi.getName().equals(engiName)) {
+            if (engi.getName().equalsIgnoreCase(engiName)) {
                 return this.engimonInvent.getItemList().indexOf(engi);
             }
         }

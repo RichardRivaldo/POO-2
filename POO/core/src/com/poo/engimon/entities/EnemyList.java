@@ -72,24 +72,6 @@ public class EnemyList {
         }
     }
 
-    public enum EngimonLiarSpesies
-    {
-        Firemon,
-        Watermon,
-        Electromon,
-        Groundmon,
-        Icemon;
-
-        /**
-         * Pick a random value of the EngimonLiarSpecses enum.
-         * @return a random EngimonLiarSpesies.
-         */
-        public static EngimonLiarSpesies getRandomSpesies() {
-            Random random = new Random();
-            return values()[random.nextInt(values().length)];
-        }
-    }
-
     public void addEnemy(){
         if (enemylist.size < maxEnemy) {
             Random randomx = new Random();
@@ -99,16 +81,15 @@ public class EnemyList {
             int coorX = randomx.nextInt(48)+1;
             int coorY = randomy.nextInt(48)+1;
             String nama = EngimonLiarName.getRandomName().toString();
-            String spesies = EngimonLiarSpesies.getRandomSpesies().toString();
-            Engimon engimon = new Engimon(nama, spesies, Skill.randomElements());
-            engimon.setLife(1);
             Skill skillnya = new Skill();
+            String spesies = "";
             switch (Skill.randomElements().get(0)) {
                 case "WATER": {
                     this.enemyAtlas = new TextureAtlas("entities/water.pack");
                     Random randomskillwater = new Random();
                     int indexnya = randomskillwater.nextInt(Skills.waterSkills().size());
                     skillnya = Skills.waterSkills().get(indexnya);
+                    spesies = "Watermon";
                     break;
                 }
                 case "FIRE": {
@@ -116,6 +97,7 @@ public class EnemyList {
                     Random randomskillfire = new Random();
                     int indexnya = randomskillfire.nextInt(Skills.fireSkills().size());
                     skillnya = Skills.fireSkills().get(indexnya);
+                    spesies = "Firemon";
                     break;
                 }
                 case "ELECTRIC": {
@@ -123,6 +105,7 @@ public class EnemyList {
                     Random randomskillelectric = new Random();
                     int indexnya = randomskillelectric.nextInt(Skills.electricSkills().size());
                     skillnya = Skills.electricSkills().get(indexnya);
+                    spesies = "Electromon";
                     break;
                 }
                 case "GROUND": {
@@ -130,6 +113,7 @@ public class EnemyList {
                     Random randomskillground = new Random();
                     int indexnya = randomskillground.nextInt(Skills.groundSkills().size());
                     skillnya = Skills.groundSkills().get(indexnya);
+                    spesies = "Groundmon";
                     break;
                 }
                 case "ICE": {
@@ -137,9 +121,12 @@ public class EnemyList {
                     Random randomskillice = new Random();
                     int indexnya = randomskillice.nextInt(Skills.iceSkills().size());
                     skillnya = Skills.iceSkills().get(indexnya);
+                    spesies = "Icemon";
                     break;
                 }
             }
+            Engimon engimon = new Engimon(nama, spesies, Skill.randomElements());
+            engimon.setLife(1);
             engimon.addSkill(skillnya);
             this.s = new Animation<TextureRegion>(1/10f, this.enemyAtlas.findRegions("s"));
             this.a = new Animation<TextureRegion>(1/10f, this.enemyAtlas.findRegions("a"));
@@ -156,14 +143,14 @@ public class EnemyList {
         }
     }
     public Enemy getEnemyTerdekat(float x_player, float y_player){
-        /*Enemy enemynya = null;
+        Enemy enemynya = null;
         for (Enemy enemy: new Array.ArrayIterator<>(enemylist)) {
-            if (((Math.abs(x_player - enemy.xpos())<=5)) && (Math.abs(y_player-enemy.ypos())<=5)){
+            if (((Math.abs(x_player - enemy.xpos())<=50)) && (Math.abs(y_player-enemy.ypos())<=50)){
                 enemynya = enemy;
             }
         }
-        return enemynya;*/
-        return enemylist.first();
+        return enemynya;
+        //return enemylist.first();
     }
     /*public void addEnemy(){
         if (enemylist.size < maxEnemy){

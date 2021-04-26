@@ -372,11 +372,17 @@ public class Player extends Sprite implements InputProcessor {
             case Keys.X:
                 play.lastCommand = "x";
                 if(!play.uiPopup.isVisible()) {
-                    this.battle = new Battle(this, play.getEnemyList().getEnemyTerdekat(this.xpos(), this.ypos()).getEngimonLiar());
-                    this.play.uiPopup.setText(this.setBattle(battle));
-                    this.play.uiPopup.setVisible(true);
-                    this.play.text.setVisible(true);
-                    Gdx.input.setInputProcessor(this.play.uiStage);
+                    try {
+                        this.battle = new Battle(this, play.getEnemyList().getEnemyTerdekat(this.xpos(), this.ypos()).getEngimonLiar());
+                        this.play.uiPopup.setText(this.setBattle(battle));
+                        this.play.text.setVisible(true);
+                        this.play.uiPopup.setVisible(true);
+                        Gdx.input.setInputProcessor(this.play.uiStage);
+                    }catch(NullPointerException e){
+                        System.out.println(e.getMessage());
+                        this.play.uiPopup.setVisible(true);
+                        this.play.uiPopup.setText("Enemy tidak terdeteksi, coba lagi!");
+                    }
                 }
                 break;
             case Keys.MINUS:

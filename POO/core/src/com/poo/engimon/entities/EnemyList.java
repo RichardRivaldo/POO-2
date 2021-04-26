@@ -138,8 +138,6 @@ public class EnemyList {
             this.d.setPlayMode(Animation.PlayMode.LOOP);
             enemylist.add(new Enemy(this.s, this.a, this.w, this.d,
                     (TiledMapTileLayer) map.getLayers().get(0), coorX, coorY, engimon));
-            /*enemylist.add(new Enemy(s, a, w, d,
-                    (TiledMapTileLayer) map.getLayers().get(0), 30, 40));*/
         }
     }
     public Enemy getEnemyTerdekat(float x_player, float y_player){

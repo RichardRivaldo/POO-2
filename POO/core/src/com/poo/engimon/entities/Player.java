@@ -41,7 +41,7 @@ public class Player extends Sprite implements InputProcessor {
     private float animationTime = 0;
 
     private Engimon activeEngimon;
-    private static Integer maxCapacity = 10;
+    private static Integer maxCapacity = 7;
     private Inventory<Engimon> engimonInvent = new Inventory<Engimon>();
     private Inventory<SkillItem> skillInvent = new Inventory<SkillItem>();
     private String playerName;
@@ -681,6 +681,7 @@ public class Player extends Sprite implements InputProcessor {
                 Skill newSkill = this.skillInvent.getItemList().get(hasItem).getSkill();
                 if (newSkill.isSkillLearnable(elements)) {
                     this.engimonInvent.getItemList().get(hasEngi).addSkill(newSkill);
+                    sb.append("Berhasil mempelajari Skill baru!");
                     wantToAdd = true;
                 } else {
                     sb.append("Engimon ini tidak cocok dengan elemen Skill tersebut!");

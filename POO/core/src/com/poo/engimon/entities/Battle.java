@@ -193,6 +193,7 @@ public class Battle {
 
             int exp = this.engimonWild.getLevel()*100/this.engimonPlayer.getLevel();
             this.engimonPlayer.addExp(exp);
+            sb.append("\n");
             sb.append(this.engimonPlayer.getName()).append(" mendapatkan ").append(exp).append(" xp\n");
 
             SkillItem item = new SkillItem(this.engimonWild.getSkill().get(0), 1);

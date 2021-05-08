@@ -165,6 +165,19 @@ public class Play implements Screen {
         this.player = new Player(s, a, w, d, (TiledMapTileLayer) this.map.getLayers().get(0), 10, 31, this, starterEngimon);
         this.activeEngimon = new ActiveEngimon(this.player,s2, a2, w2, d2, (TiledMapTileLayer) this.map.getLayers().get(0), 10, 30, this);
         this.enemyList = new EnemyList(10,this.map, this.renderer, this.camera);
+
+        // Engimon
+        starterEngimon = new Engimon("Engi1", "Firemon", new ArrayList<String>(Arrays.asList("FIRE")));
+        this.player.addEngimon(starterEngimon);
+        starterEngimon = new Engimon("Engi2", "Firemon", new ArrayList<String>(Arrays.asList("FIRE")));
+        this.player.addEngimon(starterEngimon);
+        starterEngimon = new Engimon("Engi3", "Firemon", new ArrayList<String>(Arrays.asList("FIRE")));
+        this.player.addEngimon(starterEngimon);
+        starterEngimon = new Engimon("Engi4", "Watermon", new ArrayList<String>(Arrays.asList("WATER")));
+        this.player.addEngimon(starterEngimon);
+        starterEngimon = new Engimon("Engi5", "Electromon", new ArrayList<String>(Arrays.asList("ELECTRIC")));
+        this.player.addEngimon(starterEngimon);
+
         Gdx.input.setInputProcessor(this.player);
         //Gdx.input.setInputProcessor(this.activeEngimon);
 
